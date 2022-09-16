@@ -1,6 +1,6 @@
 /*  main.cpp
  *  Programme principal du jeu.
- *
+ *  
  *  ------------------------------------------------------------------------------------------
  *  Pour cette étape:
  *   - Initialiser l'environnement du jeu. Il faut donc maîtriser les services de EzApp;
@@ -41,3 +41,5 @@ int WinMain()
   // End the program
   return 0;
 }
+
+//CECI EST UN TEST SVP EFFACER -VIncenT
