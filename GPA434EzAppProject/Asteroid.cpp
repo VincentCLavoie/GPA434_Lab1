@@ -134,7 +134,8 @@ void Asteroid::randomize(float minNbVertex, float maxNbVertex, float minPosX, fl
 // --------------------------------------------------------------------------------------
 void Asteroid::processTime(float const& elapsedTime)  // Update position vector
 {
-	// À implanter (voir le document "GPA434_Lab1_Démarrage_Rapide.pdf")
+	mPosition += mVelocity * elapsedTime;
+	mAngularPos += mAngularVel * elapsedTime;
 }
 
 // --------------------------------------------------------------------------------------

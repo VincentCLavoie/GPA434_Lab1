@@ -99,8 +99,18 @@ float Polygon::outlineWidth() const
 // Pour cette étape, on construire un astéroïde
 void Polygon::buildasteroid(float const& summitCount, Color const& inside, Color const& outline, float const& outlineWidth)
 {
-  // À implanter (voir le document "GPA434_Lab1_Démarrage_Rapide.pdf")
-
+    setColors(inside, outline, outlineWidth);
+    mVertex.resize(std::max((size_t)5, (size_t)summitCount));
+    // On utilise les coordonnées polaires (norme, theta) d'un Vect2d pour construire l'astéroïde
+    // La forme irrégulière de l'astéroïde est obtenue grâce à l'utilisation de fonction aléatoire
+    // rand() dans la génération des Vect2d.
+    //
+    // Contrainte: Chaque Vect2d aura une norme variant entre 10 à 30 unités et un angle theta
+    //
+    for (size_t i{}; i < mVertex.size(); ++i) {
+        mVertex[i].setFromPolar((float)rand() / (float)RAND_MAX * (30 - 10) + 10, i * 2.0f * 3.141592654f /
+            mVertex.size());
+    }
 }
 
 

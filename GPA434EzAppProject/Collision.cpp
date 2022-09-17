@@ -48,7 +48,11 @@ float Collision::height() const
 // --------------------------------------------------------------------------------------
 void Collision::collisionAsteroidWall(Asteroid& asteroid)
 {
-  // À implanter (voir le document "GPA434_Lab1_Démarrage_Rapide.pdf")
-
+    if (asteroid.position().y() >= mHeight)
+        asteroid.resetVerticalPosition(mHeight);
+    if (asteroid.position().x() >= mWidth)
+        asteroid.resetHorizontalPositionHop();
+    else if (asteroid.position().x() < 0.0f)
+        asteroid.resetHorizontalPositionDown(mWidth);
 }
 

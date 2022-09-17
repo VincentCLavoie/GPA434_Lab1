@@ -61,8 +61,19 @@ GameEngine::~GameEngine()
 // --------------------------------------------------------------------------------------
 bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer)
 { 
-  // À implanter (voir le document "GPA434_Lab1_Démarrage_Rapide.pdf")
-  return !keyboard.isKeyPressed(ezapp::Keyboard::Key::Escape);
+    // S'il y a lieu, gérer les corps avant les astéroïdes
+    
+    // Gérer les astéroïdes
+    for (auto& Asteroid : mAsteroid) {
+        Asteroid.processTime(timer.secondSinceLastTic());
+        mCollision.collisionAsteroidWall(Asteroid);
+    }
+
+    // S'il y a lieu, gérer les corps après les astéroïdes
+    
+    // Retourner false si l'utilisateur a appuyé sur la touche ESC
+    // afin d'arrêter le jeu.
+    return !keyboard.isKeyPressed(ezapp::Keyboard::Key::Escape);
 }
 
 
@@ -77,7 +88,22 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
 // --------------------------------------------------------------------------------------
 void GameEngine::processDisplay(ezapp::Screen& screen)
 {
-  // À implanter (voir le document "GPA434_Lab1_Démarrage_Rapide.pdf")
+    screen.setBrush(mBackgroundColor.red(), mBackgroundColor.green(),
+        mBackgroundColor.blue(), mBackgroundColor.alpha());
+    screen.clear();
+    // S'il y a lieu, tracer les éléments/corps avant les astéroïdes
+    // Tracer les astéroîdes sur le canvas (écran) de EzApp
+    for (auto& Asteroid : mAsteroid) {
+        Asteroid.draw(screen);
+    }
+    // S'il y a lieu, tracer les éléments/corps après les astéroïdes
+    
+    // Afficher un message expliquant cette étape (à enlever dans la version
+    // finale du jeu)
+    Polygon message;
+    std::string msg = "Étape 1: Déplacement des astéroïdes";
+    message.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+    message.drawText(screen, msg, 20.0f, 35.0f, 0.0f, 0.7f);
 }
 
 
