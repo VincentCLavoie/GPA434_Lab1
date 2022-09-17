@@ -71,6 +71,11 @@ public:
   // Méthodes pour construire les formes polygonales
   // Pour cette étape, on sait construire l'astéroïde
   // --------------------------------------------------------------------------
+  
+  void buildSpaceship(Color const& inside, Color const& outLine,
+      float const& x = 0.0f, float const& y = 0.0f,
+      float const& outlineWidth = 1.0f);
+
   void buildasteroid(float const& summitCount, Color const& inside, Color const& outline,
                      float const& outlineWidth);
 

@@ -41,7 +41,3 @@ int WinMain()
   // End the program
   return 0;
 }
-
-//CECI EST UN TEST SVP EFFACER -VIncenT
-
-//TEST2 ordi liliam

@@ -96,6 +96,22 @@ float Polygon::outlineWidth() const
 // formes ci-dessous.
 // --------------------------------------------------------------------------------------
 
+void Polygon::buildSpaceship(Color const& inside, Color const& outLine, float const& x,
+    float const& y, float const& outlineWidth)
+{
+    // Régler la couleur de remplissage, couleur des segments et
+    // la largeur des segments.
+    setColors(inside, outLine, outlineWidth);
+    // Réserver le nombre de sommets
+    mVertex.resize(12);
+    // Indiquer les coordonnées des sommets dans l'ordre.
+    mVertex[0].set(x, y - 35.0f);
+    mVertex[1].set(x - 37.7f, y + 9.9f);
+    mVertex[2].set(x - 31.6f, y + 15.0f);
+    // Continuer la programmation des autres sommets.
+}
+
+
 // Pour cette étape, on construire un astéroïde
 void Polygon::buildasteroid(float const& summitCount, Color const& inside, Color const& outline, float const& outlineWidth)
 {
