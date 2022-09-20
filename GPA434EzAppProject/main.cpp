@@ -23,8 +23,8 @@
 int WinMain() 
 {
   // Define default parameters
-  size_t const windowWidth{ 1280 };  
-  size_t const windowHeight{ 720 };  
+  size_t const windowWidth{ 1280 };  //1280
+  size_t const windowHeight{ 720 };  //720
   std::string const title("GPA434 Projet 1");
   std::string const iconFilename("GPALogo.png");
   std::list<std::string> const fontFilename({ "Arial" });

@@ -62,7 +62,7 @@ GameEngine::~GameEngine()
 bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer)
 { 
     // S'il y a lieu, gérer les corps avant les astéroïdes
-    
+
     // Gérer les astéroïdes
     for (auto& Asteroid : mAsteroid) {
         Asteroid.processTime(timer.secondSinceLastTic());
@@ -105,5 +105,3 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
     message.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
     message.drawText(screen, msg, 20.0f, 35.0f, 0.0f, 0.7f);
 }
-
-

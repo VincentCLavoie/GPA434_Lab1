@@ -26,6 +26,7 @@
 #include <EzApp>
 #include "Collision.h"
 #include "Asteroid.h"
+#include "Spaceship.h" //$Added by Vincent  (maybe remove later?)
 
 
 class GameEngine
@@ -48,7 +49,7 @@ private:
   Color mBackgroundColor;            // couleur de fond de l'espace du jeu
   std::vector<Asteroid> mAsteroid;   // des astéroïdes
   Collision mCollision;              // gestion des collisions
-   
+  Spaceship mShip;
 };
 
 #endif //GAME_ENGINE_H

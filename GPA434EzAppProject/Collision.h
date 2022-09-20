@@ -22,6 +22,7 @@
 
 
 #include "Asteroid.h"
+#include "Spaceship.h" //$ Maybe remove later? -Vince
 
 class Collision
 {
@@ -35,10 +36,16 @@ public:
 
   // Méthodes (fonctions membres)
   void collisionAsteroidWall(Asteroid& asteroid);
+  void setCollisionAsteroide(bool const& collision);
+  bool collisionAsteroide() const;
+  void collisionSpaceshipWall(Spaceship& ship);
+  void collisionSpaceshipAsteroid(Spaceship& ship,
+	  Asteroid const& asteroid);
+
 
 private:
   float mWidth, mHeight;          // taille de l'espace du jeu
-      
+  bool mCollisionAsteroide;		  // indiquer qu'il y a eu collision    
 };
 
 #endif //COLLISION_H

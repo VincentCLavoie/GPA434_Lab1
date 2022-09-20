@@ -20,7 +20,8 @@
 
 Collision::Collision(float width, float height)
     :mWidth(width),
-     mHeight(height)
+     mHeight(height),
+     mCollisionAsteroide { false }
 {
 }
 
@@ -56,3 +57,10 @@ void Collision::collisionAsteroidWall(Asteroid& asteroid)
         asteroid.resetHorizontalPositionDown(mWidth);
 }
 
+void Collision::collisionSpaceshipWall(Spaceship& ship)
+{
+    // 1) Gérer la collision entre le vaisseau et la bordure inférieure.
+    // 2) Gérer la collision entre le vaisseau et la bordure supérieure.
+    // 3) Gérer la collision entre le vaisseau et la bordure droite.
+    // 4) Gérer la collision entre le vaisseau et la bordure gauche.
+}

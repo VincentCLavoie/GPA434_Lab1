@@ -181,12 +181,14 @@ void Spaceship::processTime(float const& elapsedTime) // Update position vector
 	// 1) Calculer la nouvelle position linéaire
 	//    Profitez du fait que Vect2d possède les opérateurs d'addition et de multiplication
 	//    pour simplifier le codage.
+	mPosition += mVelocity * elapsedTime + 0.5 * ( mAcceleration ) * ( elapsedTime * elapsedTime );
 	
 	// 2) Calculer la nouvelle vitesse
+	mVelocity += mAcceleration * elapsedTime;
 	
 	// 3) RAZ l'accélération linéaire car l’accélération
 	//    est recalculée à chaque pas de temps par GameEngine
-	
+	mAcceleration = 0;
 }
 
 
@@ -204,12 +206,14 @@ void Spaceship::angularProcessTime(float const& elapsedTime)
 	// 1) Calculer la nouvelle position angulaire
 	//    Profitez du fait que Vect2d possède les opérateurs d'addition et de multiplication
 	//    pour simplifier le codage.
-	
+	mAngularPos += mAngularVel * elapsedTime + 0.5 * mAngularVel * ( elapsedTime * elapsedTime );
+
 	// 2) Calculer la nouvelle vitesse angulaire
-	
+	mAngularVel += mAngularAcc * elapsedTime;
+
 	// 3) RAZ l'accélération linéaire car l’accélération
 	//    est recalculée à chaque pas de temps par GameEngine
-	
+	mAngularAcc = 0;
 }
 
 // --------------------------------------------------------------------------------------
@@ -221,7 +225,7 @@ void Spaceship::draw(ezapp::Screen& screen) const
 	// Utiliser l'objet mShape pour dessiner la forme polygonale à partir
 	// de sa position linéaire et angulaire.
 
-	
+	mShape.draw(screen, mPosition.x(), mPosition.y(), mAngularPos);
 }
 
 // --------------------------------------------------------------------------------------
@@ -239,6 +243,7 @@ void Spaceship::distanceMade(float const& elapsedTime)
 	if (mVelocity.norm() >= 5.0f)
 	{
 		// 2) Cumuler la distance parcourue par le vaisseau spatial.
+		mDistanceMade += mVelocity.norm() * elapsedTime;
 	}
 }
 
@@ -249,12 +254,14 @@ void Spaceship::drawDistanceMade(ezapp::Screen& screen) const
 {
 	Polygon distance;
 	// 1) Former la chaîne de caractère contenant la distance parcourue.
-	
+	std::string msg = "Distance Parcouru: " + std::to_string(mDistanceMade);
+
 	// 2) Donner les couleurs.
-	
+	distance.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+
 	// 3) Utiliser la fonction membre de l'objet Polygon pour dessiner la chaîne de caractère
 	//    dans l'espace du jeu.
-	
+	distance.drawText(screen, msg, 20.0f, 55.0f, 0.0f, 0.7f);
 	
 }
 
@@ -265,12 +272,14 @@ void Spaceship::drawBestDistance(ezapp::Screen& screen) const
 {
 	Polygon distance;
 	// 1) Former la chaîne de caractère contenant la plus grande distance parcourue.
+	std::string msg = "Meilleur distance Parcouru: " + std::to_string(mBestDistance);
 
 	// 2) Donner les couleurs.
+	distance.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
 
 	// 3) Utiliser la fonction membre de l'objet Polygon pour dessiner la chaîne de caractère
 	//    dans l'espace du jeu.
-
+	distance.drawText(screen, msg, 20.0f, 75.0f, 0.0f, 0.7f);
 
 }
 
@@ -286,11 +295,13 @@ void Spaceship::collison()
 	// 1) Changer la couleur du vaisseau spatial pour indiquer une collision a eu lieu
 	mShape.setFill(Color(1.0f, 0.0f, 0.0f));
 	// 2) RAZ sa vitesse linéaire
+	mVelocity = 0;
 
 	// 3) RAZ sa vitesse angulaire
+	mAngularVel = 0;
 
 	// 4) Mettre à jour la plus grande distance parcourue
-
+	mBestDistance = mDistanceMade;
 }
 
 
