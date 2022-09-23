@@ -54,7 +54,7 @@ void Collision::collisionAsteroidWall(Asteroid& asteroid)
     if (asteroid.position().x() >= mWidth)
         asteroid.resetHorizontalPositionHop();
     else if (asteroid.position().x() < 0.0f)
-        asteroid.resetHorizontalPositionDown(mWidth);
+        asteroid.resetHorizontalPositionDown(mWidth); 
 }
 
 void Collision::collisionSpaceshipWall(Spaceship& ship)
@@ -63,4 +63,28 @@ void Collision::collisionSpaceshipWall(Spaceship& ship)
     // 2) Gérer la collision entre le vaisseau et la bordure supérieure.
     // 3) Gérer la collision entre le vaisseau et la bordure droite.
     // 4) Gérer la collision entre le vaisseau et la bordure gauche.
+    if (ship.position().y() <= 0 || ship.position().y() >= mHeight)
+        ship.collison();
+    if (ship.position().x() <= 0 || ship.position().x() >= mWidth)
+        ship.collison();
+}
+
+void Collision::collisionSpaceshipAsteroid(Spaceship& ship, Asteroid const& asteroid)
+{
+    // 1) Le rayon du cercle entourant le vaisseau et l'astéroïde.
+    // Ajuster ces valeurs pour un meilleur résultat visuel.
+    float rayonVaisseau = 30.0f, rayonAsteriod = 20.0f;
+
+    // 2) Calculer la distance entre la position du vaisseau et l'astéroïde.
+    // Si la distance est inférieure ou égale à la somme des rayons alors il
+    // y eu collision.
+    // 2.1) Régler mCollisionAsteroide pour indiquer qu'il y a eu collision
+    // 2.2) Exécuter la fonction collision() du vaisseau spatial pour qu'il gère
+    // son comportement.
+
+    float distance = sqrt(pow(ship.position().x() - asteroid.position().x(), 2) + pow(ship.position().y() - asteroid.position().y(), 2));
+    if (distance <= rayonVaisseau + rayonAsteriod) {
+        mCollisionAsteroide = true;
+        ship.collison();
+    }
 }

@@ -30,6 +30,7 @@ GameEngine::GameEngine(float width, float height)
     mBackgroundColor(0.34f, 0.45f, 0.56f, 1.0f), // couleur de fond
     // pour choisir une couleur: https://www.tug.org/pracjourn/2007-4/walden/color.pdf
     mAsteroid(20),                // créer 20 astéroïdes
+    /*mShip(width / 2, height / 2),*/     // le vaisseau spatial au centre du jeu
     mCollision(mWidth,mHeight)    // indiquer la taille du jeu au gestionnaire des collisions
 {
   // 

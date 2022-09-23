@@ -49,7 +49,7 @@ private:
   Color mBackgroundColor;            // couleur de fond de l'espace du jeu
   std::vector<Asteroid> mAsteroid;   // des astéroïdes
   Collision mCollision;              // gestion des collisions
-  Spaceship mShip;
+  Spaceship mShip;					 // le vaisseau spatial
 };
 
 #endif //GAME_ENGINE_H

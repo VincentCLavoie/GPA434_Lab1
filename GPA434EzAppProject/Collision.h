@@ -20,7 +20,7 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
-
+#include <cmath>
 #include "Asteroid.h"
 #include "Spaceship.h" //$ Maybe remove later? -Vince
 

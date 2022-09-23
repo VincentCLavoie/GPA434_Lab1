@@ -1,3 +1,2 @@
-﻿  Spaceship.cpp
-C:\Users\GrosM\Desktop\GPA434_Lab1\GPA434EzAppProject\Spaceship.cpp(209,43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+﻿  GameEngine.cpp
   GPA434EzAppProject.vcxproj -> C:\Users\GrosM\Desktop\GPA434_Lab1\x64\Debug\GPA434EzAppProject.exe
