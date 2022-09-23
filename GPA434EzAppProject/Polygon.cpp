@@ -103,7 +103,7 @@ void Polygon::buildSpaceship(Color const& inside, Color const& outLine, float co
     // la largeur des segments.
     setColors(inside, outLine, outlineWidth);
     // Réserver le nombre de sommets
-    mVertex.resize(5);
+    mVertex.resize(6);
     // Indiquer les coordonnées des sommets dans l'ordre.
     mVertex[0].set(x, y - 35.0f);
     mVertex[1].set(x - 37.7f, y + 9.9f);
@@ -111,6 +111,7 @@ void Polygon::buildSpaceship(Color const& inside, Color const& outLine, float co
     mVertex[3].set(x + 31.6f, y + 15.0f);
     mVertex[4].set(x + 37.7f, y + 9.9f);
     mVertex[5].set(x, y - 35.0f);
+    
 }
 
 

@@ -37,7 +37,9 @@ public:
   // Méthodes (fonctions membres)
   void collisionAsteroidWall(Asteroid& asteroid);
   void setCollisionAsteroide(bool const& collision);
-  bool collisionAsteroide() const;
+  bool collisionAsteroide() const {
+	  return mCollisionAsteroide;
+  }
   void collisionSpaceshipWall(Spaceship& ship);
   void collisionSpaceshipAsteroid(Spaceship& ship,
 	  Asteroid const& asteroid);
