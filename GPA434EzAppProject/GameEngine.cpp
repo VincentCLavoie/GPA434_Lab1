@@ -62,17 +62,17 @@ GameEngine::~GameEngine()
 // --------------------------------------------------------------------------------------
 bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer)
 {
+
     // S'il y a lieu, gérer les corps avant les astéroïdes
 
     // Gérer les astéroïdes
     for (auto& Asteroid : mAsteroid) {
         Asteroid.processTime(timer.secondSinceLastTic());
         mCollision.collisionAsteroidWall(Asteroid);
-        mCollision.collisionSpaceshipAsteroid(mShip, Asteroid);
+       
     }
     
     // S'il y a lieu, gérer les corps après les astéroïdes
-
 
     const float m = 100.0f; const float c = 50.0f;
     Vect2d acceleration(0.0f, 0.0f); float angularAcc(0.0f);
@@ -83,31 +83,31 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
     if (mCollision.collisionAsteroide())
     {
                 
-        // 1.1) Repositionner aléatoirement les astéroïdes.
-        for (auto& Asteroid : mAsteroid) {
-            // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
-            //  - Nombre de sommets (5 à 20);
-            //  - Position initiale X (toute la largeur du canvas) et Y (vertical en dehors du canvas);
-            //  - Vélocité linéaire (5 à 50);
-            //  - Vélocité angulaire (0.2 à 1);
-            //  - Couleur (Note: Niveau de gris pour un astéroïde).
-            //
-            // Note: Pour ces paramètres expérimenter avec différentes valeurs.
-            Asteroid.randomize(5.0f, 20.0f, 0.0f, mWidth, -mHeight, -5.0f, 5.0f, 50.0f, 0.2f, 1.0f, 0.0f, 0.6f);
-        }
-        // 1.2) Repositionner le corps contrôlable au centre du jeu.
-        mShip.setPosition( { mWidth / 2, mHeight / 2 });
-        mShip.setAngularPos(0);
-
-        /*Message de fin de jeu*/
-        if (mCollision.collisionAsteroide())
-        {
-            
-        }
-
         // 1.3) Mettre Collision::mCollisionAsteroide à false
         if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Space))
         {
+            // 1.1) Repositionner aléatoirement les astéroïdes.
+            for (auto& Asteroid : mAsteroid) {
+                // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
+                //  - Nombre de sommets (5 à 20);
+                //  - Position initiale X (toute la largeur du canvas) et Y (vertical en dehors du canvas);
+                //  - Vélocité linéaire (5 à 50);
+                //  - Vélocité angulaire (0.2 à 1);
+                //  - Couleur (Note: Niveau de gris pour un astéroïde).
+                //
+                // Note: Pour ces paramètres expérimenter avec différentes valeurs.
+                Asteroid.randomize(5.0f, 20.0f, 0.0f, mWidth, -mHeight, -5.0f, 5.0f, 50.0f, 0.2f, 1.0f, 0.0f, 0.6f);
+            }
+            // 1.2) Repositionner le corps contrôlable au centre du jeu.
+            mShip.setPosition({ mWidth / 2, mHeight / 2 });
+            mShip.setAngularPos(0);
+
+            /*Message de fin de jeu*/
+            if (mCollision.collisionAsteroide())
+            {
+                //àfaire
+            }
+           
             mCollision.CollisionOccured(false);
         }                  
         
@@ -151,9 +151,12 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
         // ainsi que la collision entre le vaisseau spatial et
         // un astéroïde.
         for (auto& Asteroid : mAsteroid) {
+            mCollision.collisionSpaceshipAsteroid(mShip, Asteroid);
+            
         }
         // 2.11 Gérer la collision entre le vaisseau spatial et les bordures
         // du jeu.
+        mCollision.collisionSpaceshipWall(mShip);
     }
         
     // Retourner false si l'utilisateur a appuyé sur la touche ESC
