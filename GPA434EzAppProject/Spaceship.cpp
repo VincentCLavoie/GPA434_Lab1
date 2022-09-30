@@ -5,6 +5,7 @@
  *    - Sa vitesse (linéaire et angulaire);
  *    - Sa position (linéaire et angulaire);
  *    - Son accélération (linéaire et angulaire);
+ *    - Son accélération (linéaire et angulaire);
  *    - Sa distance parcourue;
  *    - Sa plus grande distance parcourue depuis le début du jeu;
  *    - Son dessin à l'écran par le biais de la classe Polygon.
@@ -263,6 +264,22 @@ void Spaceship::drawDistanceMade(ezapp::Screen& screen) const
 	//    dans l'espace du jeu.
 	distance.drawText(screen, msg, 20.0f, 55.0f, 0.0f, 0.7f);
 	
+}
+
+/*Écrire l'écran de fin de partie*/
+void Spaceship::drawGameOverScreen(ezapp::Screen& screen) const
+{
+	Polygon GameOverString;
+	// 1) Former la chaîne de caractère contenant la distance parcourue.
+	std::string msg = "Ah, vous ne vous êtes même pas rendu à " + std::to_string(floor(mDistanceMade))
+		+ "\nCliquez sur espace pour recommencer le jeu.";
+
+	// 2) Donner les couleurs.
+	GameOverString.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+
+	// 3) Utiliser la fonction membre de l'objet Polygon pour dessiner la chaîne de caractère
+	//    dans l'espace du jeu.
+	GameOverString.drawText(screen, msg, 200.0f, 200.0f, 0.0f, 0.7f);
 }
 
 // --------------------------------------------------------------------------------------

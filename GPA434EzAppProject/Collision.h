@@ -37,6 +37,7 @@ public:
   // Méthodes (fonctions membres)
   void collisionAsteroidWall(Asteroid& asteroid);
   void setCollisionAsteroide(bool const& collision);
+  void CollisionOccured(bool collision);
   bool collisionAsteroide() const {
 	  return mCollisionAsteroide;
   }

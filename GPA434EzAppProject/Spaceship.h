@@ -76,10 +76,12 @@ public:
   // Méthodes pour faire le traçage sur le canvas (écran) EzApp:
   //    - la forme polygonale;
   //    - la distance parcourue;
+  //    -Écran de fin
   //    - la plus grande distance parcourue.
   // --------------------------------------------------------------------------
   void draw(ezapp::Screen& screen) const;
   void drawDistanceMade(ezapp::Screen& screen) const;
+  void drawGameOverScreen(ezapp::Screen& screen) const;
   void drawBestDistance(ezapp::Screen& screen) const;
 
   // --------------------------------------------------------------------------
@@ -91,6 +93,7 @@ public:
   void resetHorizontalPositionDown(float const& width);
    
 private:
+
   Vect2d mPosition;          // position linéaire
   Vect2d mVelocity;          // vitesse linéaire
   Vect2d mAcceleration;      // accélération (en X et en Y)

@@ -43,6 +43,11 @@ float Collision::height() const
   return mHeight;
 }
 
+void Collision::CollisionOccured(bool collision) 
+{
+    mCollisionAsteroide = collision;
+}
+
 
 // --------------------------------------------------------------------------------------
 // Gérer la collision entre un astéroïde et la bordure de l'espace du jeu
@@ -78,6 +83,7 @@ void Collision::collisionSpaceshipAsteroid(Spaceship& ship, Asteroid const& aste
     // 2) Calculer la distance entre la position du vaisseau et l'astéroïde.
     // Si la distance est inférieure ou égale à la somme des rayons alors il
     // y eu collision.
+    
     // 2.1) Régler mCollisionAsteroide pour indiquer qu'il y a eu collision
     // 2.2) Exécuter la fonction collision() du vaisseau spatial pour qu'il gère
     // son comportement.
