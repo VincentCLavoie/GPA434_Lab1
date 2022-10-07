@@ -133,6 +133,23 @@ void Polygon::buildasteroid(float const& summitCount, Color const& inside, Color
 }
 
 
+// Pour cette étape, on construire un missile.
+void Polygon::buildMissile(Color const& inside, Color const& outLine,
+    float const& x = 0.0f, float const& y = 0.0f,
+    float const& outlineWidth = 1.0f)
+{
+    setColors(inside, outLine, outlineWidth);
+    // Réserver le nombre de sommets
+    mVertex.resize(6);
+    // Indiquer les coordonnées des sommets dans l'ordre.
+    mVertex[0].set(x, y - 35.0f);
+    mVertex[1].set(x - 37.7f, y + 9.9f);
+    mVertex[2].set(x - 31.6f, y + 15.0f);
+    mVertex[3].set(x + 31.6f, y + 15.0f);
+    mVertex[4].set(x + 37.7f, y + 9.9f);
+    mVertex[5].set(x, y - 35.0f);
+}
+
 // --------------------------------------------------------------------------------------
 // Traçage à l'écran
 // Ainsi, un objet Polygon sait comment tracer ses segments, sous forme graphique, sur

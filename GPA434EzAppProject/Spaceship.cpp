@@ -29,21 +29,24 @@
  */
 #include "Spaceship.h"
 
-// Constructeur avec paramètres
+ // Constructeur avec paramètres
 Spaceship::Spaceship(float origineX, float origineY)
 	: mPosition(origineX, origineY),
-	  mVelocity(),
-	  mAcceleration(), 
-	  mAngularPos{},
-	  mAngularVel{},
-	  mAngularAcc{},
-	  mDistanceMade{},
-	  mBestDistance{},
-	  mShape()
+	mVelocity(),
+	mAcceleration(),
+	mAngularPos{},
+	mAngularVel{},
+	mAngularAcc{},
+	mDistanceMade{},
+	mBestDistance{},
+	mShape(),
+	mShapeMissile(),
+	mMissile(-1.0f, -1.0f)
 {
 	// Le vaisseau spatial aura la couleur noire, des traits blancs d'épaisseur de 1. Le point au centre
 	// du vaisseau est à (0, 0).
 	mShape.buildSpaceship(Color(1.0f, 1.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f, 1.0f), 0.0f, 0.0f);
+	mShapeMissile.buildMissile(Color(0.6f, 1.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f, 1.0f), 0.0f, 0.0f);
 }
 
 // Destructeur
@@ -182,11 +185,11 @@ void Spaceship::processTime(float const& elapsedTime) // Update position vector
 	// 1) Calculer la nouvelle position linéaire
 	//    Profitez du fait que Vect2d possède les opérateurs d'addition et de multiplication
 	//    pour simplifier le codage.
-	mPosition += mVelocity * elapsedTime + 0.5 * ( mAcceleration ) * ( elapsedTime * elapsedTime );
-	
+	mPosition += mVelocity * elapsedTime + 0.5 * (mAcceleration) * (elapsedTime * elapsedTime);
+
 	// 2) Calculer la nouvelle vitesse
 	mVelocity += mAcceleration * elapsedTime;
-	
+
 	// 3) RAZ l'accélération linéaire car l’accélération
 	//    est recalculée à chaque pas de temps par GameEngine
 	mAcceleration = 0;
@@ -207,7 +210,7 @@ void Spaceship::angularProcessTime(float const& elapsedTime)
 	// 1) Calculer la nouvelle position angulaire
 	//    Profitez du fait que Vect2d possède les opérateurs d'addition et de multiplication
 	//    pour simplifier le codage.
-	mAngularPos += mAngularVel * elapsedTime + 0.5 * mAngularVel * ( elapsedTime * elapsedTime );
+	mAngularPos += mAngularVel * elapsedTime + 0.5 * mAngularVel * (elapsedTime * elapsedTime);
 
 	// 2) Calculer la nouvelle vitesse angulaire
 	mAngularVel += mAngularAcc * elapsedTime;
@@ -263,7 +266,7 @@ void Spaceship::drawDistanceMade(ezapp::Screen& screen) const
 	// 3) Utiliser la fonction membre de l'objet Polygon pour dessiner la chaîne de caractère
 	//    dans l'espace du jeu.
 	distance.drawText(screen, msg, 20.0f, 55.0f, 0.0f, 0.7f);
-	
+
 }
 
 /*Écrire l'écran de fin de partie*/
@@ -321,4 +324,52 @@ void Spaceship::collison()
 	mBestDistance = mDistanceMade;
 }
 
+bool Spaceship::missileShot() const
+{
+	return mMissile.missileShot();		// Retourne l’état du missile (tiré, non tiré)
+}
+
+void Spaceship::resetMissileShot(bool const& missileShot)
+{
+	// 1) Règle l'état du missile
+	mMissile.setMissileShot(missileShot);
+	// 2) RAZ la position du missile
+	mMissile.setPosition(Vect2d(-1.0f, -1.0f));
+}
+
+void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedTime)
+{
+	const float missileVel = 250.0f; // Module de la vitesse du missile
+	// 1) Si la touche SPACEBAR est appuyée et que le missile est disponible à tirer...
+	if (spaceBarPressed == true and mMissile.missileShot() == false)
+	{
+		// 1.1) Règle l'état du missile à « tiré »
+		// 1.2) Règle la position linéaire du missile (même que celle du vaisseau spatial)
+		// 1.3) Règle la position angulaire du missile (même que celle du vaisseau spatial)
+		// 1.4) Calculer la vitesse du missile et l'assigner au missile
+	}
+	// 2) Si le missile a été tiré
+	if (mMissile.missileShot() == true)
+	{
+		// Alors mettre à jour la position du missile
+		mMissile.processTime(elapsedTime);
+	}
+}
+
+void Spaceship::drawMissile(ezapp::Screen& screen) const
+{
+	mShapeMissile.draw(screen, mMissile.position().x(), mMissile.position().y(), mMissile.angularPos());
+	// Dessiner le missile
+}
+
+
+
+
+void Spaceship::drawNbMissile(ezapp::Screen& screen,
+	float const& width) const
+{
+	/************************************************/
+	// Dessiner une indication visuelle pour signifier
+	// au joueur qu’il peut tirer à nouveau
+}
 
