@@ -157,6 +157,11 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
         // 2.11 Gérer la collision entre le vaisseau spatial et les bordures
         // du jeu.
         mCollision.collisionSpaceshipWall(mShip);
+
+        // 3.1) Missile
+        mShip.manageMissile(keyboard.isKeyPressed(ezapp::Keyboard::Key::Space), timer.secondSinceLastTic());
+
+        mCollision.collisionMissileWall(mShip);
     }
 
     // Retourner false si l'utilisateur a appuyé sur la touche ESC
@@ -198,10 +203,10 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
     // Tracer le vaisseau spatial
     mShip.draw(screen);
 
+    // Tracer le missile
+    mShip.drawMissile(screen);
+
     // Afficher ses statistiques
     mShip.drawDistanceMade(screen);
     mShip.drawBestDistance(screen);
-
-
-
 }

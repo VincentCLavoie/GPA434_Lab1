@@ -62,6 +62,8 @@ public:
     void resetDistanceMade();
     void resetSpaceship(float const& width, float const& height);
 
+    Vect2d positionMissile() const;
+
     // --------------------------------------------------------------------------
     // Méthodes pour la mise à jour de:
     //    - la position linéaire et angulaire;
@@ -98,6 +100,7 @@ public:
     void drawMissile(ezapp::Screen& screen) const;
     void drawNbMissile(ezapp::Screen& screen,
         float const& width) const;
+    void collisionMissileWall();
 
 private:
 

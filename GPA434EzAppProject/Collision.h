@@ -42,6 +42,7 @@ public:
 	  return mCollisionAsteroide;
   }
   void collisionSpaceshipWall(Spaceship& ship);
+  void collisionMissileWall(Spaceship& ship);
   void collisionSpaceshipAsteroid(Spaceship& ship,
 	  Asteroid const& asteroid);
 

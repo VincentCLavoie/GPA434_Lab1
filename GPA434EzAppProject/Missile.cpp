@@ -88,3 +88,9 @@ void Missile::draw(ezapp::Screen& screen) const
 {
 	mShape.draw(screen, mPosition.x(), mPosition.y(), mAngularPos);
 }
+
+void Missile::collison() 
+{
+	mMissileShot = false;
+	setPosition(Vect2d(-10.0f, -10.0f));
+}

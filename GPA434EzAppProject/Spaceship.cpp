@@ -337,12 +337,12 @@ void Spaceship::resetMissileShot(bool const& missileShot)
 	// 1) Règle l'état du missile
 	mMissile.setMissileShot(missileShot);
 	// 2) RAZ la position du missile
-	mMissile.setPosition(Vect2d(-1.0f, -1.0f));
+	mMissile.setPosition(Vect2d(-10.0f, -10.0f));
 }
 
 void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedTime)
 {
-	const float missileVel = 25.0f; // Module de la vitesse du missile
+	const float missileVel = 150.0f; // Module de la vitesse du missile
 	//Vect2d norm;
 	//Vect2d angle;
 
@@ -357,7 +357,7 @@ void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedT
 
 		// 1.3) Règle la position angulaire du missile (même que celle du vaisseau spatial)
 		mMissile.setAngularPos(mAngularPos); // AngPos du Spaceship?
-		vitesseMissile.setFromPolar(missileVel, mMissile.angularPos());
+		vitesseMissile.setFromPolar(missileVel, mMissile.angularPos() - (90.0f * 3.141592654f)/180.0f);
 
 		// 1.4) Calculer la vitesse du missile et l'assigner au missile
 		mMissile.setVelocity(vitesseMissile);
@@ -387,3 +387,13 @@ void Spaceship::drawNbMissile(ezapp::Screen& screen,
 	// au joueur qu’il peut tirer à nouveau
 }
 
+Vect2d Spaceship::positionMissile() const
+{
+	// Retourner la position linéaire du missile
+	return mMissile.position();
+}
+
+void Spaceship::collisionMissileWall() 
+{
+	mMissile.collison();
+}

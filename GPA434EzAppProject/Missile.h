@@ -60,6 +60,7 @@ public:
     // --------------------------------------------------------------------------
     void processTime(float const& elapsedTime);
     void draw(ezapp::Screen& screen) const;
+    void collison();
 
 private:
     Vect2d mPosition;          // Pposition linéaire

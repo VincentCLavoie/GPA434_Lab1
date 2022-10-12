@@ -74,6 +74,14 @@ void Collision::collisionSpaceshipWall(Spaceship& ship)
         ship.collison();
 }
 
+void Collision::collisionMissileWall(Spaceship& ship)
+{
+    if (ship.positionMissile().y() <= 0 || ship.positionMissile().y() >= mHeight)
+        ship.collisionMissileWall();
+    if (ship.positionMissile().x() <= 0 || ship.positionMissile().x() >= mWidth)
+        ship.collisionMissileWall();
+}
+
 void Collision::collisionSpaceshipAsteroid(Spaceship& ship, Asteroid const& asteroid)
 {
     // 1) Le rayon du cercle entourant le vaisseau et l'astéroïde.
