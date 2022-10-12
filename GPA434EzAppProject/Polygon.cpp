@@ -139,14 +139,21 @@ void Polygon::buildMissile(Color const& inside, Color const& outLine, float cons
 {
     setColors(inside, outLine, outlineWidth);
     // Réserver le nombre de sommets
-    mVertex.resize(6);
+    mVertex.resize(13);
     // Indiquer les coordonnées des sommets dans l'ordre.
-    mVertex[0].set(x, y - 35.0f);
-    mVertex[1].set(x - 37.7f, y + 9.9f);
-    mVertex[2].set(x - 31.6f, y + 15.0f);
-    mVertex[3].set(x + 31.6f, y + 15.0f);
-    mVertex[4].set(x + 37.7f, y + 9.9f);
-    mVertex[5].set(x, y - 35.0f);
+    mVertex[0].set(x + 6.25f, y - 14.0f);
+    mVertex[1].set(x, y - 20.0f);
+    mVertex[2].set(x - 6.25f, y - 14.0f);
+    mVertex[3].set(x - 6.25f, y - 8.0f);
+    mVertex[4].set(x - 15.0F, y + 5.0f);
+    mVertex[5].set(x - 6.25f, y + 5.0f);
+    mVertex[6].set(x - 6.25f, y + 14.0f);
+    mVertex[7].set(x - 15.0f, y + 25.0f);
+    mVertex[8].set(x + 15.0f, y + 25.0f);
+    mVertex[9].set(x + 6.25f, y + 14.0f);
+    mVertex[10].set(x + 6.25f, y + 5.0f);
+    mVertex[11].set(x + 15.0f, y + 5.0f);
+    mVertex[12].set(x + 6.25f, y - 8.0f);
 }
 
 // --------------------------------------------------------------------------------------

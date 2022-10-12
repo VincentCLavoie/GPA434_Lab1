@@ -1,7 +1,4 @@
 ﻿  Collision.cpp
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Collision.cpp(99,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  GameEngine.cpp
-  main.cpp
-  Missile.cpp
-  Generating Code...
+C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Collision.cpp(91,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Collision.cpp(123,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   GPA434EzAppProject.vcxproj -> C:\Users\GrosM\Source\Repos\GPA434_Lab1\x64\Debug\GPA434EzAppProject.exe

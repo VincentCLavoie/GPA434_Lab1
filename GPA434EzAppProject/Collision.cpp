@@ -74,15 +74,7 @@ void Collision::collisionSpaceshipWall(Spaceship& ship)
         ship.collison();
 }
 
-void Collision::collisionMissileWall(Spaceship& ship)
-{
-    if (ship.positionMissile().y() <= 0 || ship.positionMissile().y() >= mHeight)
-        ship.collisionMissileWall();
-    if (ship.positionMissile().x() <= 0 || ship.positionMissile().x() >= mWidth)
-        ship.collisionMissileWall();
-}
-
-void Collision::collisionSpaceshipAsteroid(Spaceship& ship, Asteroid const& asteroid)
+void Collision::collisionSpaceshipAsteroid(Spaceship& ship, Asteroid asteroid)
 {
     // 1) Le rayon du cercle entourant le vaisseau et l'astéroïde.
     // Ajuster ces valeurs pour un meilleur résultat visuel.
@@ -98,7 +90,40 @@ void Collision::collisionSpaceshipAsteroid(Spaceship& ship, Asteroid const& aste
 
     float distance = sqrt(pow(ship.position().x() - asteroid.position().x(), 2) + pow(ship.position().y() - asteroid.position().y(), 2));
     if (distance <= rayonVaisseau + rayonAsteriod) {
+
+        asteroid.randomize(5.0f, 20.0f, 0.0f, mWidth, -mHeight, -5.0f, 5.0f, 50.0f, 0.2f, 1.0f, 0.0f, 0.6f);
+
         mCollisionAsteroide = true;
         ship.collison();
+    }
+}
+
+void Collision::collisionMissileWall(Spaceship& ship)
+{
+    if (ship.positionMissile().y() <= 0 || ship.positionMissile().y() >= mHeight)
+        ship.collisionMissileWall();
+    if (ship.positionMissile().x() <= 0 || ship.positionMissile().x() >= mWidth)
+        ship.collisionMissileWall();
+}
+
+void Collision::collisionMissileAsteroid(Spaceship& ship, Asteroid asteroid)
+{
+    // 1) Le rayon du cercle entourant le vaisseau et l'astéroïde.
+    // Ajuster ces valeurs pour un meilleur résultat visuel.
+    float rayonMissile = 30.0f, rayonAsteriod = 20.0f;
+
+    // 2) Calculer la distance entre la position du vaisseau et l'astéroïde.
+    // Si la distance est inférieure ou égale à la somme des rayons alors il
+    // y eu collision.
+
+    // 2.1) Régler mCollisionAsteroide pour indiquer qu'il y a eu collision
+    // 2.2) Exécuter la fonction collision() du vaisseau spatial pour qu'il gère
+    // son comportement.
+
+    float distance = sqrt(pow(ship.positionMissile().x() - asteroid.position().x(), 2) + pow(ship.positionMissile().y() - asteroid.position().y(), 2));
+    if (distance <= rayonMissile + rayonAsteriod) {
+        asteroid.resetHorizontalPositionDown(mWidth);
+        asteroid.resetVerticalPosition(mHeight);
+        asteroid.resetHorizontalPositionHop();
     }
 }

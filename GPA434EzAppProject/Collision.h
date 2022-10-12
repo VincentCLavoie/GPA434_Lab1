@@ -43,9 +43,8 @@ public:
   }
   void collisionSpaceshipWall(Spaceship& ship);
   void collisionMissileWall(Spaceship& ship);
-  void collisionSpaceshipAsteroid(Spaceship& ship,
-	  Asteroid const& asteroid);
-
+  void collisionSpaceshipAsteroid(Spaceship& ship, Asteroid asteroid);
+  void collisionMissileAsteroid(Spaceship& ship, Asteroid asteroid);
 
 private:
   float mWidth, mHeight;          // taille de l'espace du jeu
