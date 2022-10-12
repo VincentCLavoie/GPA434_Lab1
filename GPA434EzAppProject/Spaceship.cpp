@@ -41,7 +41,8 @@ Spaceship::Spaceship(float origineX, float origineY)
 	mBestDistance{},
 	mShape(),
 	mShapeMissile(),
-	mMissile(-1.0f, -1.0f)
+	mMissile(-1.0f, -1.0f),
+	vitesseMissile(-1, -1)
 {
 	// Le vaisseau spatial aura la couleur noire, des traits blancs d'épaisseur de 1. Le point au centre
 	// du vaisseau est à (0, 0).
@@ -116,6 +117,8 @@ void Spaceship::setAcceleration(Vect2d const& acceleration)
 	// Assigner l'accélération linéaire
 	mAcceleration = acceleration;
 }
+
+
 
 void Spaceship::setAngularPos(float const& angularPos)
 {
@@ -339,14 +342,25 @@ void Spaceship::resetMissileShot(bool const& missileShot)
 
 void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedTime)
 {
-	const float missileVel = 250.0f; // Module de la vitesse du missile
+	const float missileVel = 25.0f; // Module de la vitesse du missile
+	//Vect2d norm;
+	//Vect2d angle;
+
 	// 1) Si la touche SPACEBAR est appuyée et que le missile est disponible à tirer...
 	if (spaceBarPressed == true and mMissile.missileShot() == false)
 	{
 		// 1.1) Règle l'état du missile à « tiré »
+		mMissile.setMissileShot(true);
+
 		// 1.2) Règle la position linéaire du missile (même que celle du vaisseau spatial)
+		mMissile.setPosition(mPosition);  //mPosition du Spaceship?
+
 		// 1.3) Règle la position angulaire du missile (même que celle du vaisseau spatial)
+		mMissile.setAngularPos(mAngularPos); // AngPos du Spaceship?
+		vitesseMissile.setFromPolar(missileVel, mMissile.angularPos());
+
 		// 1.4) Calculer la vitesse du missile et l'assigner au missile
+		mMissile.setVelocity(vitesseMissile);
 	}
 	// 2) Si le missile a été tiré
 	if (mMissile.missileShot() == true)

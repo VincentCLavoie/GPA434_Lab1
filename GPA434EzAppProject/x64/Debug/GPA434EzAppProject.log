@@ -1,16 +1,9 @@
-﻿  Asteroid.cpp
-  Collision.cpp
+﻿  Collision.cpp
 C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Collision.cpp(91,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   GameEngine.cpp
-  main.cpp
   Missile.cpp
-  Polygon.cpp
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Polygon.cpp(138,22): error C2572: 'Polygon::buildMissile': redefinition of default argument: parameter 1
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Polygon.h(82): message : see declaration of 'Polygon::buildMissile'
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Polygon.cpp(138,45): error C2572: 'Polygon::buildMissile': redefinition of default argument: parameter 2
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Polygon.h(82): message : see declaration of 'Polygon::buildMissile'
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Polygon.cpp(139,33): error C2572: 'Polygon::buildMissile': redefinition of default argument: parameter 3
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Polygon.h(82): message : see declaration of 'Polygon::buildMissile'
   Spaceship.cpp
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Spaceship.cpp(213,43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Spaceship.cpp(216,43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  main.cpp
   Generating Code...
+  GPA434EzAppProject.vcxproj -> C:\Users\GrosM\Source\Repos\GPA434_Lab1\x64\Debug\GPA434EzAppProject.exe

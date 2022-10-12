@@ -20,8 +20,8 @@
 
 Collision::Collision(float width, float height)
     :mWidth(width),
-     mHeight(height),
-     mCollisionAsteroide { false }
+    mHeight(height),
+    mCollisionAsteroide{ false }
 {
 }
 
@@ -35,15 +35,15 @@ Collision::~Collision()
 // --------------------------------------------------------------------------------------
 float Collision::width() const
 {
-  return mWidth;
+    return mWidth;
 }
 
 float Collision::height() const
 {
-  return mHeight;
+    return mHeight;
 }
 
-void Collision::CollisionOccured(bool collision) 
+void Collision::CollisionOccured(bool collision)
 {
     mCollisionAsteroide = collision;
 }
@@ -59,7 +59,7 @@ void Collision::collisionAsteroidWall(Asteroid& asteroid)
     if (asteroid.position().x() >= mWidth)
         asteroid.resetHorizontalPositionHop();
     else if (asteroid.position().x() < 0.0f)
-        asteroid.resetHorizontalPositionDown(mWidth); 
+        asteroid.resetHorizontalPositionDown(mWidth);
 }
 
 void Collision::collisionSpaceshipWall(Spaceship& ship)
@@ -83,7 +83,7 @@ void Collision::collisionSpaceshipAsteroid(Spaceship& ship, Asteroid const& aste
     // 2) Calculer la distance entre la position du vaisseau et l'astéroïde.
     // Si la distance est inférieure ou égale à la somme des rayons alors il
     // y eu collision.
-    
+
     // 2.1) Régler mCollisionAsteroide pour indiquer qu'il y a eu collision
     // 2.2) Exécuter la fonction collision() du vaisseau spatial pour qu'il gère
     // son comportement.

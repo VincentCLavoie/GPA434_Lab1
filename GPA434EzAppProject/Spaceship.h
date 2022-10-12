@@ -112,6 +112,7 @@ private:
     Polygon mShape;            // forme polygonale du vaisseau
     Polygon mShapeMissile;
     Missile mMissile;
+    Vect2d vitesseMissile;     // Vitesse du missile
 
 };
 #endif //SPACESHIP_H

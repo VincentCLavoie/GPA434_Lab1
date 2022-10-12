@@ -23,7 +23,7 @@
  */
 #include "GameEngine.h"
 
-// Constructeur par défaut
+ // Constructeur par défaut
 GameEngine::GameEngine(float width, float height)
     :mWidth{ width },             // largeur du jeu
     mHeight{ height },            // hauteur du jeu
@@ -31,26 +31,26 @@ GameEngine::GameEngine(float width, float height)
     // pour choisir une couleur: https://www.tug.org/pracjourn/2007-4/walden/color.pdf
     mAsteroid(20),                // créer 20 astéroïdes
     mShip(width / 2, height / 2),   // le vaisseau spatial au centre du jeu
-    mCollision(mWidth,mHeight)    // indiquer la taille du jeu au gestionnaire des collisions
+    mCollision(mWidth, mHeight)    // indiquer la taille du jeu au gestionnaire des collisions
 {
-  // 
-  for (auto& Asteroid : mAsteroid) {
-    // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
-    //  - Nombre de sommets (5 à 20);
-    //  - Position initiale X (toute la largeur du canvas) et Y (vertical en dehors du canvas);
-    //  - Vélocité linéaire (5 à 50);
-    //  - Vélocité angulaire (0.2 à 1);
-    //  - Couleur (Note: Niveau de gris pour un astéroïde).
-    //
-    // Note: Pour ces paramètres expérimenter avec différentes valeurs.
-    Asteroid.randomize(5.0f, 20.0f, 0.0f, width, -height, -5.0f, 5.0f, 50.0f,0.2f,1.0f, 0.0f, 0.6f);
-  }
+    // 
+    for (auto& Asteroid : mAsteroid) {
+        // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
+        //  - Nombre de sommets (5 à 20);
+        //  - Position initiale X (toute la largeur du canvas) et Y (vertical en dehors du canvas);
+        //  - Vélocité linéaire (5 à 50);
+        //  - Vélocité angulaire (0.2 à 1);
+        //  - Couleur (Note: Niveau de gris pour un astéroïde).
+        //
+        // Note: Pour ces paramètres expérimenter avec différentes valeurs.
+        Asteroid.randomize(5.0f, 20.0f, 0.0f, width, -height, -5.0f, 5.0f, 50.0f, 0.2f, 1.0f, 0.0f, 0.6f);
+    }
 }
 
 // Destructeur
 GameEngine::~GameEngine()
 {
-  // do nothing
+    // do nothing
 }
 
 // --------------------------------------------------------------------------------------
@@ -69,9 +69,9 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
     for (auto& Asteroid : mAsteroid) {
         Asteroid.processTime(timer.secondSinceLastTic());
         mCollision.collisionAsteroidWall(Asteroid);
-       
+
     }
-    
+
     // S'il y a lieu, gérer les corps après les astéroïdes
 
     const float m = 100.0f; const float c = 50.0f;
@@ -82,7 +82,7 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
     // que le joueur a appuyé sur la touche ENTER.
     if (mCollision.collisionAsteroide())
     {
-                
+
         // 1.3) Mettre Collision::mCollisionAsteroide à false
         if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Space))
         {
@@ -107,30 +107,30 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
             {
                 //àfaire
             }
-           
+
             mCollision.CollisionOccured(false);
-        }                  
-        
+        }
+
     }
 
     // 2) S'il n'y a pas de collision
     else
     {
-       // 2.1) Calculer l'accélération linéaire pour la touche "Up"
+        // 2.1) Calculer l'accélération linéaire pour la touche "Up"
         if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Up))
             acceleration.setFromPolar(m, mShip.angularPos() + (3.0f * 3.141592654f) / 2.0f);
 
         // 2.2) Calculer l'accélération linéaire pour la touche "Down"
         if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Down))
-            acceleration.setFromPolar( - m, mShip.angularPos() + (3.0f * 3.141592654f) / 2.0f);
- 
+            acceleration.setFromPolar(-m, mShip.angularPos() + (3.0f * 3.141592654f) / 2.0f);
+
         // 2.3) Calculer l'accélération angulaire pour la touche "Right"
         if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Right))
             angularAcc = (m / c);
 
         // 2.4) Calculer l'accélération angulaire pour la touche "Left"
         if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Left))
-            angularAcc = ( - m / c);
+            angularAcc = (-m / c);
 
         // 2.5) Mettre à jour l'accélération linéaire du vaisseau spatial.
         mShip.setAcceleration(acceleration);
@@ -146,19 +146,19 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
 
         // 2.9) Accumuler la distance parcourue.
         mShip.distanceMade(timer.secondSinceLastTic());
-        
+
         // 2.10) Gérer les collisions des astéroïdes et l'espace du jeu
         // ainsi que la collision entre le vaisseau spatial et
         // un astéroïde.
         for (auto& Asteroid : mAsteroid) {
             mCollision.collisionSpaceshipAsteroid(mShip, Asteroid);
-            
+
         }
         // 2.11 Gérer la collision entre le vaisseau spatial et les bordures
         // du jeu.
         mCollision.collisionSpaceshipWall(mShip);
     }
-        
+
     // Retourner false si l'utilisateur a appuyé sur la touche ESC
     // afin d'arrêter le jeu.
 
@@ -186,7 +186,7 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
         Asteroid.draw(screen);
     }
     // S'il y a lieu, tracer les éléments/corps après les astéroïdes
-    
+
     // Afficher un message expliquant cette étape (à enlever dans la version
     // finale du jeu)
     Polygon message;
@@ -194,7 +194,7 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
     message.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
     message.drawText(screen, msg, 20.0f, 35.0f, 0.0f, 0.7f);
 
-    
+
     // Tracer le vaisseau spatial
     mShip.draw(screen);
 
@@ -203,5 +203,5 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
     mShip.drawBestDistance(screen);
 
 
-       
+
 }

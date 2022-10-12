@@ -8,6 +8,7 @@ Missile::Missile(float origineX, float origineY)
 	mAngularPos{},
 	mAngularVel{},
 	mMissileShot{}
+
 {
 	// Le vaisseau spatial aura la couleur noire, des traits blancs d'épaisseur de 1. Le point au centre
 	// du vaisseau est à (0, 0).

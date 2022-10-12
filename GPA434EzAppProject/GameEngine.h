@@ -32,24 +32,24 @@
 class GameEngine
 {
 public:
-  GameEngine(float width = 800, float height = 600);  // constructeur par défaut
-  ~GameEngine();                                      // destructeur
-  GameEngine(const GameEngine& p) = delete;           // constructeur de copie
-  GameEngine& operator=(const GameEngine& c) = delete;// constructeur par assignation
+	GameEngine(float width = 800, float height = 600);  // constructeur par défaut
+	~GameEngine();                                      // destructeur
+	GameEngine(const GameEngine& p) = delete;           // constructeur de copie
+	GameEngine& operator=(const GameEngine& c) = delete;// constructeur par assignation
 
-  // Méthodes (fonctions membres)
-  // Note: Ces deux méthodes seront exécutées par EzApp à chaque pas de temps (time step)
-  //       Aussi, la signature et le type de retour de ces fonctions membres sont imposées
-  //       par la bibliothèque EzApp.
-  bool processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer);
-  void processDisplay(ezapp::Screen& screen);
+	// Méthodes (fonctions membres)
+	// Note: Ces deux méthodes seront exécutées par EzApp à chaque pas de temps (time step)
+	//       Aussi, la signature et le type de retour de ces fonctions membres sont imposées
+	//       par la bibliothèque EzApp.
+	bool processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer);
+	void processDisplay(ezapp::Screen& screen);
 
 private:
-  float mWidth, mHeight;             // taille de l'espace du jeu
-  Color mBackgroundColor;            // couleur de fond de l'espace du jeu
-  std::vector<Asteroid> mAsteroid;   // des astéroïdes
-  Collision mCollision;              // gestion des collisions
-  Spaceship mShip;					 // le vaisseau spatial
+	float mWidth, mHeight;             // taille de l'espace du jeu
+	Color mBackgroundColor;            // couleur de fond de l'espace du jeu
+	std::vector<Asteroid> mAsteroid;   // des astéroïdes
+	Collision mCollision;              // gestion des collisions
+	Spaceship mShip;					 // le vaisseau spatial
 };
 
 #endif //GAME_ENGINE_H

@@ -134,9 +134,8 @@ void Polygon::buildasteroid(float const& summitCount, Color const& inside, Color
 
 
 // Pour cette étape, on construire un missile.
-void Polygon::buildMissile(Color const& inside, Color const& outLine,
-    float const& x = 0.0f, float const& y = 0.0f,
-    float const& outlineWidth = 1.0f)
+void Polygon::buildMissile(Color const& inside, Color const& outLine, float const& x,
+    float const& y, float const& outlineWidth)
 {
     setColors(inside, outLine, outlineWidth);
     // Réserver le nombre de sommets
