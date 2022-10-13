@@ -125,5 +125,8 @@ void Collision::collisionMissileAsteroid(Spaceship& ship, Asteroid asteroid)
         asteroid.resetHorizontalPositionDown(mWidth);
         asteroid.resetVerticalPosition(mHeight);
         asteroid.resetHorizontalPositionHop();
+
+        mCollisionAsteroide = true;
+        ship.collison();
     }
 }
