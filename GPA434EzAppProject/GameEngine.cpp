@@ -210,4 +210,5 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
     // Afficher ses statistiques
     mShip.drawDistanceMade(screen);
     mShip.drawBestDistance(screen);
+    mShip.drawNbMissile(screen);
 }

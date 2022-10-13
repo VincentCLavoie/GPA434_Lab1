@@ -42,7 +42,8 @@ Spaceship::Spaceship(float origineX, float origineY)
 	mShape(),
 	mShapeMissile(),
 	mMissile(-1.0f, -1.0f),
-	vitesseMissile(-1, -1)
+	vitesseMissile(-1, -1),
+	mNbMissiles(1)
 {
 	// Le vaisseau spatial aura la couleur noire, des traits blancs d'épaisseur de 1. Le point au centre
 	// du vaisseau est à (0, 0).
@@ -99,6 +100,12 @@ float Spaceship::distanceMade() const
 {
 	return mDistanceMade;
 }
+
+int Spaceship::nbMissiles() const
+{
+	return mNbMissiles;
+}
+
 
 void Spaceship::setPosition(Vect2d const& position)
 {
@@ -173,6 +180,12 @@ void Spaceship::resetSpaceship(float const& width, float const& height)
 	// Remettre la couleur de remplissage à noir
 	mShape.setFill(Color(1.0f, 1.0f, 0.0f, 1.0f));
 }
+
+void Spaceship::setNbMissiles(int nbMissiles)
+{
+	mNbMissiles = nbMissiles;
+}
+
 
 // --------------------------------------------------------------------------------------
 // Mise à jour de la position et la vitesse linéaire du viasseau spatial
@@ -347,16 +360,18 @@ void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedT
 	//Vect2d angle;
 
 	// 1) Si la touche SPACEBAR est appuyée et que le missile est disponible à tirer...
-	if (spaceBarPressed == true and mMissile.missileShot() == false)
+	if (spaceBarPressed == true and mNbMissiles > 0)//mMissile.missileShot() == false)
 	{
 		// 1.1) Règle l'état du missile à « tiré »
 		mMissile.setMissileShot(true);
+		mNbMissiles--;
 
 		// 1.2) Règle la position linéaire du missile (même que celle du vaisseau spatial)
 		mMissile.setPosition(mPosition);  //mPosition du Spaceship?
 
 		// 1.3) Règle la position angulaire du missile (même que celle du vaisseau spatial)
 		mMissile.setAngularPos(mAngularPos); // AngPos du Spaceship?
+		
 		vitesseMissile.setFromPolar(missileVel, mMissile.angularPos() - (90.0f * 3.141592654f)/180.0f);
 
 		// 1.4) Calculer la vitesse du missile et l'assigner au missile
@@ -379,12 +394,22 @@ void Spaceship::drawMissile(ezapp::Screen& screen) const
 
 
 
-void Spaceship::drawNbMissile(ezapp::Screen& screen,
-	float const& width) const
+void Spaceship::drawNbMissile(ezapp::Screen& screen) const
 {
-	/************************************************/
+	/**/
 	// Dessiner une indication visuelle pour signifier
 	// au joueur qu’il peut tirer à nouveau
+	Polygon nbMissiles;
+	// 1) Former la chaîne de caractère contenant le nombre de missiles restant.
+	std::string msg = "Il vous reste tant de missiles: " + std::to_string(mNbMissiles);
+
+	// 2) Donner les couleurs.
+	nbMissiles.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+
+	// 3) Utiliser la fonction membre de l'objet Polygon pour dessiner la chaîne de caractère
+	//    dans l'espace du jeu.
+	nbMissiles.drawText(screen, msg, 950.0f, 25.0f, 0.0f, 0.7f);
+
 }
 
 Vect2d Spaceship::positionMissile() const
@@ -393,7 +418,8 @@ Vect2d Spaceship::positionMissile() const
 	return mMissile.position();
 }
 
-void Spaceship::collisionMissileWall() 
+void Spaceship::collisionMissile() 
 {
+	mNbMissiles++;
 	mMissile.collison();
 }

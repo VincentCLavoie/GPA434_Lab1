@@ -51,6 +51,7 @@ public:
     float angularVel() const;
     float angularAcc() const;
     float distanceMade() const;
+    int nbMissiles() const;
 
     void setPosition(Vect2d const& position);
     void setVelocity(Vect2d const& velocity);
@@ -61,6 +62,7 @@ public:
     void resetAngularAcc();
     void resetDistanceMade();
     void resetSpaceship(float const& width, float const& height);
+    void setNbMissiles(int nbMissiles);
 
     Vect2d positionMissile() const;
 
@@ -98,9 +100,8 @@ public:
     void resetMissileShot(bool const& missileShot);
     void manageMissile(bool const& spaceBarPressed, float const& elapsedTime);
     void drawMissile(ezapp::Screen& screen) const;
-    void drawNbMissile(ezapp::Screen& screen,
-        float const& width) const;
-    void collisionMissileWall();
+    void drawNbMissile(ezapp::Screen& screen) const;
+    void collisionMissile();
 
 private:
 
@@ -116,6 +117,7 @@ private:
     Polygon mShapeMissile;
     Missile mMissile;
     Vect2d vitesseMissile;     // Vitesse du missile
+    int mNbMissiles;
 
 };
 #endif //SPACESHIP_H
