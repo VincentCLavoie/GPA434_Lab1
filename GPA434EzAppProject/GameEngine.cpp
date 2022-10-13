@@ -152,7 +152,9 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
         // un astéroïde.
         for (auto& Asteroid : mAsteroid) {
             mCollision.collisionSpaceshipAsteroid(mShip, Asteroid);
-            mCollision.collisionMissileAsteroid(mShip, Asteroid);
+
+            if(mShip.missileShot())
+                mCollision.collisionMissileAsteroid(mShip, Asteroid);
         }
         // 2.11 Gérer la collision entre le vaisseau spatial et les bordures
         // du jeu.
@@ -161,8 +163,8 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
         // 3.1) Missile
         mShip.manageMissile(keyboard.isKeyPressed(ezapp::Keyboard::Key::Space), timer.secondSinceLastTic());
 
-        mCollision.collisionMissileWall(mShip);
-        
+        if (mShip.missileShot())
+            mCollision.collisionMissileWall(mShip);
     }
 
     // Retourner false si l'utilisateur a appuyé sur la touche ESC

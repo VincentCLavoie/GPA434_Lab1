@@ -360,11 +360,10 @@ void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedT
 	//Vect2d angle;
 
 	// 1) Si la touche SPACEBAR est appuyée et que le missile est disponible à tirer...
-	if (spaceBarPressed == true and mNbMissiles > 0)//mMissile.missileShot() == false)
+	if (spaceBarPressed == true and !missileShot())//mMissile.missileShot() == false)
 	{
 		// 1.1) Règle l'état du missile à « tiré »
 		mMissile.setMissileShot(true);
-		mNbMissiles--;
 
 		// 1.2) Règle la position linéaire du missile (même que celle du vaisseau spatial)
 		mMissile.setPosition(mPosition);  //mPosition du Spaceship?
@@ -420,6 +419,5 @@ Vect2d Spaceship::positionMissile() const
 
 void Spaceship::collisionMissile() 
 {
-	mNbMissiles++;
 	mMissile.collison();
 }
