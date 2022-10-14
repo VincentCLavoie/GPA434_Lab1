@@ -45,7 +45,7 @@ public:
 	void processDisplay(ezapp::Screen& screen);
 
 	//Accesseur
-	bool state() const;
+	bool state() const;	
 
 	//Mutateur
 	void setState(bool const& state);
