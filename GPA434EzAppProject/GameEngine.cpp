@@ -33,12 +33,12 @@ GameEngine::GameEngine(float width, float height)
     mAsteroid(20),                // créer 20 astéroïdes
     mShip(width / 2, height / 2),   // le vaisseau spatial au centre du jeu
     mCollision(mWidth, mHeight),    // indiquer la taille du jeu au gestionnaire des collisions
-    mState()
+    mState(true)
 
 {
     
-    //Ici mettre un setState a false
-    setState(false);
+    
+   
 
     for (auto& Asteroid : mAsteroid) {
         // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
@@ -77,20 +77,28 @@ bool GameEngine::state() const
 //    - Gérer les collisions entre les astéroïdes et les bordures de l'espace du jeu.
 // --------------------------------------------------------------------------------------
 bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer)
-{
-    bool finDeJeu = false;
-    GameEngine::setState(true);
-
-    while (!finDeJeu)
-    {
-        if (GameEngine::state() == false)
+{       
+        bool finDeJeu = false;
+        
+        
+        if (state() == false)
         {
                 finDeJeu = true;
+
+                if (keyboard.isKeyPressed(ezapp::Keyboard::Key::R)) 
+                {
+                    setState(true);
+                }
+
+                // Retourner false si l'utilisateur a appuyé sur la touche ESC
+                // afin d'arrêter le jeu.
+                return !keyboard.isKeyPressed(ezapp::Keyboard::Key::Escape);
+            
         }
 
-        else if (GameEngine::state() == true)
+        if (state() == true)
         {
-            bool fin = false;
+            
             //Jeu en run
             // S'il y a lieu, gérer les corps avant les astéroïdes
 
@@ -204,18 +212,12 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
 
             }
 
-            
+            // Retourner false si l'utilisateur a appuyé sur la touche ESC
+    // afin d'arrêter le jeu.
+            return !keyboard.isKeyPressed(ezapp::Keyboard::Key::Escape);
         }
         return true;
 
-    }
-
-    
-
-    // Retourner false si l'utilisateur a appuyé sur la touche ESC
-    // afin d'arrêter le jeu.
-
-    return !keyboard.isKeyPressed(ezapp::Keyboard::Key::Escape);
 }
 
 
@@ -230,37 +232,56 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
 // --------------------------------------------------------------------------------------
 void GameEngine::processDisplay(ezapp::Screen& screen)
 {
+    if (state() == true)
+    {
+        screen.setBrush(mBackgroundColor.red(), mBackgroundColor.green(),
+            mBackgroundColor.blue(), mBackgroundColor.alpha());
+        screen.clear();
 
-    screen.setBrush(mBackgroundColor.red(), mBackgroundColor.green(),
-        mBackgroundColor.blue(), mBackgroundColor.alpha());
-    screen.clear();
-    // S'il y a lieu, tracer les éléments/corps avant les astéroïdes
-    // Tracer les astéroîdes sur le canvas (écran) de EzApp
-    for (auto& Asteroid : mAsteroid) {
-        Asteroid.draw(screen);
+
+        // S'il y a lieu, tracer les éléments/corps avant les astéroïdes
+        // Tracer les astéroîdes sur le canvas (écran) de EzApp
+        for (auto& Asteroid : mAsteroid) {
+            Asteroid.draw(screen);
+        }
+        // S'il y a lieu, tracer les éléments/corps après les astéroïdes
+
+        // Afficher un message expliquant cette étape (à enlever dans la version
+        // finale du jeu)
+        Polygon message;
+        std::string msg = "Étape 1: Déplacement des astéroïdes";
+        message.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+        message.drawText(screen, msg, 20.0f, 35.0f, 0.0f, 0.7f);
+
+
+        // Tracer le vaisseau spatial
+        mShip.draw(screen);
+
+        // Tracer le missile
+        mShip.drawMissile(screen);
+
+        // Afficher ses statistiques
+        mShip.drawDistanceMade(screen);
+        mShip.drawBestDistance(screen);
+        mShip.drawNbMissile(screen);
     }
-    // S'il y a lieu, tracer les éléments/corps après les astéroïdes
-
-    // Afficher un message expliquant cette étape (à enlever dans la version
-    // finale du jeu)
-    Polygon message;
-    std::string msg = "Étape 1: Déplacement des astéroïdes";
-    message.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
-    message.drawText(screen, msg, 20.0f, 35.0f, 0.0f, 0.7f);
+    
 
 
+    if (GameEngine::state() == false) 
+    {
+        screen.setBrush(mBackgroundColor.blue(), mBackgroundColor.red(),
+            mBackgroundColor.green(), mBackgroundColor.alpha());
+        screen.clear();
 
 
+        Polygon message1;
+        std::string msg1 = "Menu du jeu!\n\n\nPour rejouer cliquer sur la touche : R";
+        message1.setColors(Color(2.0f, 7.0f, 1.0f), Color(2.0f, 1.0f, 1.0f));
+        message1.drawText(screen, msg1, 450.0f, 255.0f, 0.0f, 0.7f);
 
-    // Tracer le vaisseau spatial
-    mShip.draw(screen);
+        
+    }
 
-    // Tracer le missile
-    mShip.drawMissile(screen);
-
-    // Afficher ses statistiques
-    mShip.drawDistanceMade(screen);
-    mShip.drawBestDistance(screen);
-    mShip.drawNbMissile(screen);
 }
 
