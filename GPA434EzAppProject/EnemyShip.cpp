@@ -14,6 +14,7 @@ EnemyShip::EnemyShip(Vect2d const& pos, Vect2d const& vel)
 	mNbMissiles(1)
 {
 	mShape.buildEnemyShip(Color(0.0f, 0.0f, 1.0f, 0.0f), Color(0.0f, 0.0f, 0.0f, 1.0f), 0.0f, 0.0f);
+	mShapeMissile.buildMissile(Color(0.6f, 1.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f, 1.0f), 0.0f, 0.0f);
 }
 
 // Destructeur
@@ -157,4 +158,15 @@ void EnemyShip::Shoot(float const& elapsedTime)
 		// Alors mettre à jour la position du missile
 		mMissile.processTime(elapsedTime);
 	}
+}
+
+void EnemyShip::drawMissile(ezapp::Screen& screen) const
+{
+	mShapeMissile.draw(screen, mMissile.position().x(), mMissile.position().y(), mMissile.angularPos());
+}
+
+void Spaceship::collisionMissile()
+{
+	mMissile.collison();
+	mNbMissiles = 1;
 }

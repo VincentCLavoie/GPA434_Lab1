@@ -53,6 +53,7 @@ public:
     // Méthodes (fonctions membres)
     void processTime(float const& elapsedTime);
     void draw(ezapp::Screen& screen) const;
+    void drawMissile(ezapp::Screen& screen) const;
 
     void resetVerticalPosition(float const& height);
     void resetHorizontalPositionHop() { mPosition.setX(0.0f); }
@@ -63,6 +64,7 @@ public:
 
     void Aim(Spaceship& ship);
     void Shoot(float const& elapsedTime);
+    void collisionMissile();
 
 private:
     Vect2d mPosition;          // position linéaire

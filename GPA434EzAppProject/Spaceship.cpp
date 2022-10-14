@@ -364,6 +364,7 @@ void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedT
 	{
 		// 1.1) Règle l'état du missile à « tiré »
 		mMissile.setMissileShot(true);
+		mNbMissiles = 0;
 
 		// 1.2) Règle la position linéaire du missile (même que celle du vaisseau spatial)
 		mMissile.setPosition(mPosition);  //mPosition du Spaceship?
@@ -420,4 +421,5 @@ Vect2d Spaceship::positionMissile() const
 void Spaceship::collisionMissile() 
 {
 	mMissile.collison();
+	mNbMissiles = 1;
 }
