@@ -78,12 +78,12 @@ bool GameEngine::state() const
 // --------------------------------------------------------------------------------------
 bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer)
 {       
-        bool finDeJeu = false;
+        
         
         
         if (state() == false)
         {
-                finDeJeu = true;
+                
 
                 if (keyboard.isKeyPressed(ezapp::Keyboard::Key::P)) 
                 {
@@ -114,16 +114,13 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
             const float m = 100.0f; const float c = 50.0f;
             Vect2d acceleration(0.0f, 0.0f); float angularAcc(0.0f);
 
-
             // 1) RAZ le jeu s'il y a eu collision entre le vaisseau et un astéroïde et
             // que le joueur a appuyé sur la touche ENTER.
             if (mCollision.collisionAsteroide())
             {
-
                 // 1.3) Mettre Collision::mCollisionAsteroide à false
                 if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Space))
-                {
-                    GameEngine::setState(false);
+                {                  
                     // 1.1) Repositionner aléatoirement les astéroïdes.
                     for (auto& Asteroid : mAsteroid) {
                         // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
@@ -143,7 +140,7 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
                     /*Message de fin de jeu*/
                     if (mCollision.collisionAsteroide())
                     {
-                        //àfaire
+                        setState(false); //À ajouter dans merge
                     }
 
                     mCollision.CollisionOccured(false);
@@ -188,8 +185,11 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
                     mShip.setAcceleration(0);
                     mShip.setAngularAcc(0);
                     mShip.resetSpaceship(mWidth,mHeight);
-                    
+                                                          
 
+                    //Initialiser missile shot
+                    mShip.resetMissileShot(false);
+                    
                     
                 }
 
@@ -220,6 +220,7 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
                 // 2.11 Gérer la collision entre le vaisseau spatial et les bordures
                 // du jeu.
                 mCollision.collisionSpaceshipWall(mShip);
+
 
                 // 3.1) Missile
                 mShip.manageMissile(keyboard.isKeyPressed(ezapp::Keyboard::Key::Space), timer.secondSinceLastTic());
@@ -290,13 +291,24 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
         screen.clear();
 
 
-        Polygon message1;
-        std::string msg1 = "Menu du jeu!\n\n\nPresser P : Pour jouer cliquer\n\n"
-            "Presser M : Pour revenir au menu pendant le jeu.\n\n"
-            "Presser Esc : Pour quitter le jeu";
-        message1.setColors(Color(2.0f, 7.0f, 1.0f), Color(2.0f, 1.0f, 1.0f));
-        message1.drawText(screen, msg1, 450.0f, 255.0f, 0.0f, 0.7f);
+        Polygon message1,message2,message3;
+        std::string msg1 = "--------------------------\n|\tMenu du jeu!\t|\n--------------------------\n";
+        message1.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+        message1.drawText(screen, msg1, 450.0f, 200.0f, 0.0f, 0.7f);
 
+        std::string msg2 = "\nAppuyer P : Pour jouer \n"
+            "\nAppuyer M : Pour revenir au menu pendant le jeu.\n"
+            "\nAppuyer Esc : Pour quitter le jeu\n\n";
+        message2.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+        message2.drawText(screen, msg2, 450.0f, 255.0f, 0.0f, 0.7f);
+
+
+        std::string msg3 = "\n----------------------------------------------------------------------------------------------------------\n"
+            "\tInstructions: si vous mourrez durant le jeu, pressez sur la barre d'espace!\n"
+            "\tPendant le jeu, si vous presser la barre d'espace vous lancez des missiles.\t\n"
+            "---------------------------------------------------------------------------------------------------------- \n";
+        message3.setColors(Color(5.4f, 2.0f, 2.0f), Color(2.5f, 2.0f, 2.0f));
+        message3.drawText(screen, msg3, 280.0f, 500.0f, 0.0f, 0.7f);
         
     }
 
