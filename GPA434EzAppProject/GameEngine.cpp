@@ -31,10 +31,12 @@ GameEngine::GameEngine(float width, float height)
     // pour choisir une couleur: https://www.tug.org/pracjourn/2007-4/walden/color.pdf
     mAsteroid(20),                // créer 20 astéroïdes
     mShip(width / 2, height / 2),   // le vaisseau spatial au centre du jeu
-    mCollision(mWidth, mHeight)    // indiquer la taille du jeu au gestionnaire des collisions
+    mCollision(mWidth, mHeight),    // indiquer la taille du jeu au gestionnaire des collisions
+    mState()
 
 {
-    // 
+    
+
     for (auto& Asteroid : mAsteroid) {
         // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
         //  - Nombre de sommets (5 à 20);
@@ -52,6 +54,16 @@ GameEngine::GameEngine(float width, float height)
 GameEngine::~GameEngine()
 {
     // do nothing
+}
+
+void GameEngine::setState(bool const& state) 
+{
+    mState = state;
+}
+
+bool GameEngine::state() const 
+{
+    return mState;
 }
 
 // --------------------------------------------------------------------------------------
@@ -215,3 +227,4 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
     mShip.drawBestDistance(screen);
     mShip.drawNbMissile(screen);
 }
+
