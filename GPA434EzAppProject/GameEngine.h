@@ -50,6 +50,7 @@ private:
 	std::vector<Asteroid> mAsteroid;   // des astéroïdes
 	Collision mCollision;              // gestion des collisions
 	Spaceship mShip;					 // le vaisseau spatial
+
 };
 
 #endif //GAME_ENGINE_H

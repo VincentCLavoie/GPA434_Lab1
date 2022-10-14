@@ -32,6 +32,7 @@ GameEngine::GameEngine(float width, float height)
     mAsteroid(20),                // créer 20 astéroïdes
     mShip(width / 2, height / 2),   // le vaisseau spatial au centre du jeu
     mCollision(mWidth, mHeight)    // indiquer la taille du jeu au gestionnaire des collisions
+
 {
     // 
     for (auto& Asteroid : mAsteroid) {
