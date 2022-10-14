@@ -83,6 +83,10 @@ public:
         float const& x = 0.0f, float const& y = 0.0f,
         float const& outlineWidth = 1.0f);
 
+    void buildEnemyShip(Color const& inside, Color const& outLine,
+        float const& x = 0.0f, float const& y = 0.0f,
+        float const& outlineWidth = 1.0f);
+
     // Méthodes pour faire le traçage sur le canvas (écran) EzApp
     void draw(ezapp::Screen& screen, float const& x = 0.0f, float const& y = 0.0f, float const& rotation = 0.0f,
         float const& scale = 1.0f) const;

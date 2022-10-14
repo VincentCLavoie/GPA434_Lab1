@@ -22,7 +22,7 @@
 
 #include <cmath>
 #include "Asteroid.h"
-#include "Spaceship.h" //$ Maybe remove later? -Vince
+#include "Spaceship.h"
 
 class Collision
 {

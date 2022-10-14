@@ -26,6 +26,7 @@
 #include <EzApp>
 #include "Collision.h"
 #include "Asteroid.h"
+#include "EnemyShip.h"
 #include "Spaceship.h" //$Added by Vincent  (maybe remove later?)
 
 
@@ -44,12 +45,20 @@ public:
 	bool processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer);
 	void processDisplay(ezapp::Screen& screen);
 
+	//Accesseur
+	bool state() const;
+
+	//Mutateur
+	void setState(bool const& state);
+
 private:
 	float mWidth, mHeight;             // taille de l'espace du jeu
 	Color mBackgroundColor;            // couleur de fond de l'espace du jeu
 	std::vector<Asteroid> mAsteroid;   // des astéroïdes
+	std::vector<EnemyShip> mEnemyShip;
 	Collision mCollision;              // gestion des collisions
-	Spaceship mShip;					 // le vaisseau spatial
+	Spaceship mShip;				   // le vaisseau spatial
+	bool mState;					   //État du jeu en run ou en mode menu
 };
 
 #endif //GAME_ENGINE_H

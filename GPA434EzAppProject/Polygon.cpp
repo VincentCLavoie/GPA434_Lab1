@@ -156,6 +156,24 @@ void Polygon::buildMissile(Color const& inside, Color const& outLine, float cons
     mVertex[12].set(x + 6.25f, y - 8.0f);
 }
 
+void Polygon::buildEnemyShip(Color const& inside, Color const& outLine, float const& x,
+    float const& y, float const& outlineWidth)
+{
+    // Régler la couleur de remplissage, couleur des segments et
+    // la largeur des segments.
+    setColors(inside, outLine, outlineWidth);
+    // Réserver le nombre de sommets
+    mVertex.resize(6);
+    // Indiquer les coordonnées des sommets dans l'ordre.
+    mVertex[0].set(x, y - 35.0f);
+    mVertex[1].set(x - 37.7f, y + 9.9f);
+    mVertex[2].set(x - 31.6f, y + 15.0f);
+    mVertex[3].set(x + 31.6f, y + 15.0f);
+    mVertex[4].set(x + 37.7f, y + 9.9f);
+    mVertex[5].set(x, y - 35.0f);
+
+}
+
 // --------------------------------------------------------------------------------------
 // Traçage à l'écran
 // Ainsi, un objet Polygon sait comment tracer ses segments, sous forme graphique, sur

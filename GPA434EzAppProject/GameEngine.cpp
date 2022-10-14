@@ -30,8 +30,10 @@ GameEngine::GameEngine(float width, float height)
     mBackgroundColor(0.34f, 0.45f, 0.56f, 1.0f), // couleur de fond
     // pour choisir une couleur: https://www.tug.org/pracjourn/2007-4/walden/color.pdf
     mAsteroid(20),                // créer 20 astéroïdes
+    mEnemyShip(1),
     mShip(width / 2, height / 2),   // le vaisseau spatial au centre du jeu
-    mCollision(mWidth, mHeight)    // indiquer la taille du jeu au gestionnaire des collisions
+    mCollision(mWidth, mHeight),    // indiquer la taille du jeu au gestionnaire des collisions
+    mState(false)
 {
     // 
     for (auto& Asteroid : mAsteroid) {
@@ -45,12 +47,26 @@ GameEngine::GameEngine(float width, float height)
         // Note: Pour ces paramètres expérimenter avec différentes valeurs.
         Asteroid.randomize(5.0f, 20.0f, 0.0f, width, -height, -5.0f, 5.0f, 50.0f, 0.2f, 1.0f, 0.0f, 0.6f);
     }
+
+    for (auto& EnemyShip : mEnemyShip) {
+        EnemyShip.Create(400, 400, 400, 400, 0);
+    }
 }
 
 // Destructeur
 GameEngine::~GameEngine()
 {
     // do nothing
+}
+
+void GameEngine::setState(bool const& state)
+{
+    mState = state;
+}
+
+bool GameEngine::state() const
+{
+    return mState;
 }
 
 // --------------------------------------------------------------------------------------
@@ -62,6 +78,22 @@ GameEngine::~GameEngine()
 // --------------------------------------------------------------------------------------
 bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer const& timer)
 {
+    bool finDeJeu = false;
+
+    if (state() == false)
+    {
+        finDeJeu = true;
+
+        if (keyboard.isKeyPressed(ezapp::Keyboard::Key::P))
+        {
+            setState(true);
+        }
+
+        // Retourner false si l'utilisateur a appuyé sur la touche ESC
+        // afin d'arrêter le jeu.
+        return !keyboard.isKeyPressed(ezapp::Keyboard::Key::Escape);
+
+    }
 
     // S'il y a lieu, gérer les corps avant les astéroïdes
 
@@ -69,10 +101,14 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
     for (auto& Asteroid : mAsteroid) {
         Asteroid.processTime(timer.secondSinceLastTic());
         mCollision.collisionAsteroidWall(Asteroid);
-
     }
 
-    // S'il y a lieu, gérer les corps après les astéroïdes
+    // Gérer les vaisseau adverssaires
+    for (auto& EnemyShip : mEnemyShip) {
+        EnemyShip.processTime(timer.secondSinceLastTic());
+        EnemyShip.Aim(mShip);
+        EnemyShip.Shoot(timer.secondSinceLastTic());
+    }
 
     const float m = 100.0f; const float c = 50.0f;
     Vect2d acceleration(0.0f, 0.0f); float angularAcc(0.0f);
@@ -192,6 +228,9 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
     // Tracer les astéroîdes sur le canvas (écran) de EzApp
     for (auto& Asteroid : mAsteroid) {
         Asteroid.draw(screen);
+    }
+    for (auto& EnemyShip : mEnemyShip) {
+        EnemyShip.draw(screen);
     }
     // S'il y a lieu, tracer les éléments/corps après les astéroïdes
 
