@@ -33,7 +33,7 @@ GameEngine::GameEngine(float width, float height)
     mAsteroid(20),                // créer 20 astéroïdes
     mShip(width / 2, height / 2),   // le vaisseau spatial au centre du jeu
     mCollision(mWidth, mHeight),    // indiquer la taille du jeu au gestionnaire des collisions
-    mState(true)
+    mState(false)
 
 {
     
@@ -85,7 +85,7 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
         {
                 finDeJeu = true;
 
-                if (keyboard.isKeyPressed(ezapp::Keyboard::Key::R)) 
+                if (keyboard.isKeyPressed(ezapp::Keyboard::Key::P)) 
                 {
                     setState(true);
                 }
@@ -174,6 +174,23 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
                 if (keyboard.isKeyPressed(ezapp::Keyboard::Key::M))
                 {
                     GameEngine::setState(false);
+
+                    //Réinitialiser les astéroides
+                    for (auto& Asteroid : mAsteroid) {
+                        Asteroid.processTime(timer.secondSinceLastTic());
+                        Asteroid.randomize(5.0f, 20.0f, 0.0f, mWidth, -mHeight, -5.0f, 5.0f, 50.0f, 0.2f, 1.0f, 0.0f, 0.6f);
+
+                    }
+                    //Réinitialiser la position du vaiseau
+                    //mShip.setPosition({ mWidth / 2, mHeight / 2 });
+                    mShip.processTime(timer.secondSinceLastTic());
+                    mShip.setAngularPos(0);
+                    mShip.setAcceleration(0);
+                    mShip.setAngularAcc(0);
+                    mShip.resetSpaceship(mWidth,mHeight);
+                    
+
+                    
                 }
 
                 // 2.5) Mettre à jour l'accélération linéaire du vaisseau spatial.
@@ -265,8 +282,6 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
         mShip.drawBestDistance(screen);
         mShip.drawNbMissile(screen);
     }
-    
-
 
     if (GameEngine::state() == false) 
     {
@@ -276,7 +291,9 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
 
 
         Polygon message1;
-        std::string msg1 = "Menu du jeu!\n\n\nPour rejouer cliquer sur la touche : R";
+        std::string msg1 = "Menu du jeu!\n\n\nPresser P : Pour jouer cliquer\n\n"
+            "Presser M : Pour revenir au menu pendant le jeu.\n\n"
+            "Presser Esc : Pour quitter le jeu";
         message1.setColors(Color(2.0f, 7.0f, 1.0f), Color(2.0f, 1.0f, 1.0f));
         message1.drawText(screen, msg1, 450.0f, 255.0f, 0.0f, 0.7f);
 
