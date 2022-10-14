@@ -23,6 +23,7 @@
 #include <cmath>
 #include "Asteroid.h"
 #include "Spaceship.h"
+#include "EnemyShip.h"
 
 class Collision
 {
@@ -43,8 +44,14 @@ public:
   }
   void collisionSpaceshipWall(Spaceship& ship);
   void collisionMissileWall(Spaceship& ship);
+  void collisionMissileEnemyWall(EnemyShip& ship);
   void collisionSpaceshipAsteroid(Spaceship& ship, Asteroid asteroid);
   void collisionMissileAsteroid(Spaceship& ship, Asteroid& asteroid);
+  void collisionMissileEnnemiAsteroid(EnemyShip& eShip, Asteroid& asteroid);
+  void collisionMissileVaisseau(EnemyShip& eShip, Spaceship& ship);
+  void collisionMissileEnnemiVaisseau(EnemyShip& eShip, Spaceship& ship);
+  void collisionMissileMissile(EnemyShip& eShip, Spaceship& ship);
+  void collisionEnnemiVaisseau(EnemyShip& eShip, Spaceship& ship);
 
 private:
   float mWidth, mHeight;          // taille de l'espace du jeu

@@ -106,6 +106,14 @@ void Collision::collisionMissileWall(Spaceship& ship)
         ship.collisionMissile();
 }
 
+void Collision::collisionMissileEnemyWall(EnemyShip& ship)
+{
+    if (ship.positionMissile().y() <= 0 || ship.positionMissile().y() >= mHeight)
+        ship.collisionMissile();
+    if (ship.positionMissile().x() <= 0 || ship.positionMissile().x() >= mWidth)
+        ship.collisionMissile();
+}
+
 void Collision::collisionMissileAsteroid(Spaceship& ship, Asteroid& asteroid)
 {
     float rayonMissile = 15.0f, rayonAsteriod = 20.0f;
@@ -116,5 +124,63 @@ void Collision::collisionMissileAsteroid(Spaceship& ship, Asteroid& asteroid)
         asteroid.resetHorizontalPositionHop();
 
         ship.collisionMissile();
+    }
+}
+
+void Collision::collisionMissileVaisseau(EnemyShip& eShip, Spaceship& ship)
+{
+    float rayonMissile = 15.0f, rayonVaisseau = 20.0f;
+
+    float distance = sqrt(pow(ship.position().x() - eShip.positionMissile().x(), 2) + pow(ship.position().y() - eShip.positionMissile().y(), 2));
+    if (distance <= rayonMissile + rayonVaisseau) {
+        mCollisionAsteroide = true;
+        ship.collison();
+        eShip.collisionMissile();
+    }
+}
+
+void Collision::collisionMissileEnnemiVaisseau(EnemyShip& eShip, Spaceship& ship)
+{
+    float rayonMissile = 15.0f, rayonVaisseau = 20.0f;
+
+    float distance = sqrt(pow(ship.positionMissile().x() - eShip.position().x(), 2) + pow(ship.positionMissile().y() - eShip.position().y(), 2));
+    if (distance <= rayonMissile + rayonVaisseau) {
+        eShip.collision(mWidth, mHeight);
+        ship.collisionMissile();
+    }
+}
+
+void Collision::collisionMissileEnnemiAsteroid(EnemyShip& eShip, Asteroid& asteroid)
+{
+    float rayonMissile = 15.0f, rayonAsteriod = 20.0f;
+
+    float distance = sqrt(pow(eShip.positionMissile().x() - asteroid.position().x(), 2) + pow(eShip.positionMissile().y() - asteroid.position().y(), 2));
+    if (distance <= rayonMissile + rayonAsteriod) {
+        asteroid.resetVerticalPosition(mHeight);
+        asteroid.resetHorizontalPositionHop();
+
+        eShip.collisionMissile();
+    }
+}
+
+void Collision::collisionMissileMissile(EnemyShip& eShip, Spaceship& ship)
+{
+    float rayonMissile = 10.0f;
+
+    float distance = sqrt(pow(ship.positionMissile().x() - eShip.positionMissile().x(), 2) + pow(ship.positionMissile().y() - eShip.positionMissile().y(), 2));
+    if (distance <= rayonMissile * 2) {
+        ship.collisionMissile();
+        eShip.collisionMissile();
+    }
+}
+
+void Collision::collisionEnnemiVaisseau(EnemyShip& eShip, Spaceship& ship)
+{
+    float rayonVaisseau = 20.0f;
+
+    float distance = sqrt(pow(ship.position().x() - eShip.positionMissile().x(), 2) + pow(ship.position().y() - eShip.positionMissile().y(), 2));
+    if (distance <= rayonVaisseau * 2) {
+        mCollisionAsteroide = true;
+        ship.collison();
     }
 }

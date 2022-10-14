@@ -30,7 +30,7 @@ GameEngine::GameEngine(float width, float height)
     mBackgroundColor(0.34f, 0.45f, 0.56f, 1.0f), // couleur de fond
     // pour choisir une couleur: https://www.tug.org/pracjourn/2007-4/walden/color.pdf
     mAsteroid(20),                // créer 20 astéroïdes
-    mEnemyShip(1),
+    mEnemyShip(2),
     mShip(width / 2, height / 2),   // le vaisseau spatial au centre du jeu
     mCollision(mWidth, mHeight),    // indiquer la taille du jeu au gestionnaire des collisions
     mState(false)
@@ -49,7 +49,7 @@ GameEngine::GameEngine(float width, float height)
     }
 
     for (auto& EnemyShip : mEnemyShip) {
-        EnemyShip.Create(400, 400, 400, 400, 0);
+        EnemyShip.Create(mWidth, mWidth+100, mHeight, mHeight+100, 0);
     }
 }
 
@@ -125,6 +125,9 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
             // 1.3) Mettre Collision::mCollisionAsteroide à false
             if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Space))
             {
+                //Go back to menu
+                setState(false);
+
                 // 1.1) Repositionner aléatoirement les astéroïdes.
                 for (auto& Asteroid : mAsteroid) {
                     // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
@@ -214,6 +217,11 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
 
                 if (mShip.missileShot())
                     mCollision.collisionMissileAsteroid(mShip, Asteroid);
+
+                for (auto& EnemyShip : mEnemyShip) {
+                    mCollision.collisionMissileEnnemiAsteroid(EnemyShip, Asteroid);
+                }
+                
             }
             // 2.11 Gérer la collision entre le vaisseau spatial et les bordures
             // du jeu.
@@ -223,7 +231,17 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
             mShip.manageMissile(keyboard.isKeyPressed(ezapp::Keyboard::Key::Space), timer.secondSinceLastTic());
 
             if (mShip.missileShot())
+            {
                 mCollision.collisionMissileWall(mShip);
+            }
+                
+            for (auto& EnemyShip : mEnemyShip) {
+                mCollision.collisionMissileVaisseau(EnemyShip, mShip);
+                mCollision.collisionMissileEnnemiVaisseau(EnemyShip, mShip);
+                mCollision.collisionMissileEnemyWall(EnemyShip);
+                mCollision.collisionEnnemiVaisseau(EnemyShip, mShip);
+                mCollision.collisionMissileMissile(EnemyShip, mShip);
+            }
         }
 
         // Retourner false si l'utilisateur a appuyé sur la touche ESC

@@ -338,6 +338,8 @@ void Spaceship::collison()
 
 	// 4) Mettre à jour la plus grande distance parcourue
 	mBestDistance = mDistanceMade;
+
+
 }
 
 bool Spaceship::missileShot() const

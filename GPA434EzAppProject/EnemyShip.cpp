@@ -88,7 +88,6 @@ void EnemyShip::Create(float minPosX, float maxPosX, float minPosY,
 void EnemyShip::processTime(float const& elapsedTime)  // Update position vector
 {
 	mPosition += mVelocity * elapsedTime;
-	mAngularPos = 0;
 }
 
 // --------------------------------------------------------------------------------------
@@ -129,6 +128,10 @@ void EnemyShip::Aim(Spaceship& ship)
 		angle += 3.141592654f;
 
 	mAngularPos = angle;
+	
+	Vect2d velocity(0.0f, 0.0f);
+	velocity.setFromPolar(50, angle + (3.0f * 3.141592654f) / 2.0f);
+	mVelocity = velocity;
 }
 
 void EnemyShip::Shoot(float const& elapsedTime)
@@ -165,8 +168,14 @@ void EnemyShip::drawMissile(ezapp::Screen& screen) const
 	mShapeMissile.draw(screen, mMissile.position().x(), mMissile.position().y(), mMissile.angularPos());
 }
 
-void Spaceship::collisionMissile()
+void EnemyShip::collisionMissile()
 {
 	mMissile.collison();
 	mNbMissiles = 1;
+}
+
+void EnemyShip::collision(int screenWidth, int screenHeight)
+{
+	
+	mPosition = Vect2d(random(screenWidth, screenWidth + 100), random(screenHeight, screenHeight + 100));
 }

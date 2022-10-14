@@ -65,6 +65,7 @@ public:
     void Aim(Spaceship& ship);
     void Shoot(float const& elapsedTime);
     void collisionMissile();
+    void collision(int screenWidth, int screenHeight);
 
 private:
     Vect2d mPosition;          // position linéaire
