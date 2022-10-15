@@ -176,6 +176,17 @@ void EnemyShip::collisionMissile()
 
 void EnemyShip::collision(int screenWidth, int screenHeight)
 {
-	
-	mPosition = Vect2d(random(screenWidth, screenWidth + 100), random(screenHeight, screenHeight + 100));
+	switch (rand()%3) {
+		case 0:
+			mPosition = Vect2d(random(screenWidth, screenWidth + 100), random(0, screenHeight));
+			break;
+
+		case 1:
+			mPosition = Vect2d(random(0, screenWidth), random(screenHeight, screenHeight + 100));
+			break;
+
+		default:
+			mPosition = Vect2d(random(-100, 0), random(0, screenHeight));
+			break;
+	}
 }

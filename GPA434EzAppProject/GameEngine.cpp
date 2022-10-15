@@ -50,6 +50,7 @@ GameEngine::GameEngine(float width, float height)
 
     for (auto& EnemyShip : mEnemyShip) {
         EnemyShip.Create(mWidth, mWidth+100, mHeight, mHeight+100, 0);
+        EnemyShip.collision(mWidth, mHeight);
     }
 }
 
@@ -125,9 +126,6 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
             // 1.3) Mettre Collision::mCollisionAsteroide à false
             if (keyboard.isKeyPressed(ezapp::Keyboard::Key::Space))
             {
-                //Go back to menu
-                setState(false);
-
                 // 1.1) Repositionner aléatoirement les astéroïdes.
                 for (auto& Asteroid : mAsteroid) {
                     // Pour chaque astéroïde initialiser ses paramètres par un choix aléatoire entre min et max:
