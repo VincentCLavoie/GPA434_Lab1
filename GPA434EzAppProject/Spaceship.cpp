@@ -43,7 +43,8 @@ Spaceship::Spaceship(float origineX, float origineY)
 	mShapeMissile(),
 	mMissile(-1.0f, -1.0f),
 	vitesseMissile(-1, -1),
-	mNbMissiles(1)
+	mNbMissiles(1),
+	mGuidedMissile(-1.0f, -1.0f)
 {
 	// Le vaisseau spatial aura la couleur noire, des traits blancs d'épaisseur de 1. Le point au centre
 	// du vaisseau est à (0, 0).
@@ -385,6 +386,51 @@ void Spaceship::manageMissile(bool const& spaceBarPressed, float const& elapsedT
 		// Alors mettre à jour la position du missile
 		mMissile.processTime(elapsedTime);
 	}
+}
+
+void Spaceship::manageGuidedMissile(bool const& gPressed, float const& elapsedTime)
+{
+	const float missileVel = 150.0f;    // Module de la vitesse du missile
+
+	// Si la touche "g" est appuyée et que le missile est disponible, switch au missile guidé.
+	if (gPressed == true and !missileShot())
+	{
+		// Règle l'état du missile à « tiré »
+		mGuidedMissile.setMissileShot(true);
+		// Règle la position linéaire du missile (même que celle du vaisseau spatial)
+		mGuidedMissile.setPosition(mPosition);
+		// Règle la position angulaire du missile (même que celle du vaisseau spatial)
+		mGuidedMissile.setAngularPos(mAngularPos);
+
+		vitesseMissile.setFromPolar(missileVel, mGuidedMissile.angularPos() - (90.0f * 3.141592654f) / 180.0f);
+
+		// Calculer la vitesse du missile et l'assigner au missile
+		mGuidedMissile.setVelocity(vitesseMissile);
+	}
+	// Si le missile a été tiré
+	if (mGuidedMissile.guidedMissileShot() == true)
+	{
+
+		// Alors mettre à jour la position du missile
+		mGuidedMissile.processTime(elapsedTime);
+	}
+}
+
+void Spaceship::setGMissileAngularAcc(float const& angularAcc)
+{
+	// Assigner l'accélération angulaire
+	mAngularAcc = angularAcc;
+}
+
+float Spaceship::GMissileangularAcc() const
+{
+	// Retourner l'accélération angulaire
+	return mAngularAcc;
+}
+
+bool Spaceship::guidedMissileShot() const
+{
+	return mGuidedMissile.guidedMissileShot();        // Retourne l’état du guided missile (tiré, non tiré)
 }
 
 void Spaceship::drawMissile(ezapp::Screen& screen) const

@@ -240,6 +240,23 @@ bool GameEngine::processEvents(ezapp::Keyboard const& keyboard, ezapp::Timer con
                 mCollision.collisionEnnemiVaisseau(EnemyShip, mShip);
                 mCollision.collisionMissileMissile(EnemyShip, mShip);
             }
+
+            // 3.2) GuidedMissile
+            mShip.manageGuidedMissile(keyboard.isKeyPressed(ezapp::Keyboard::Key::G), timer.secondSinceLastTic());
+
+            if (mShip.guidedMissileShot())
+                mCollision.collisionMissileWall(mShip);
+
+            // Calculer l'accélération angulaire pour la touche "Right"
+            if (keyboard.isKeyPressed(ezapp::Keyboard::Key::D))
+                mShip.setGMissileAngularAcc(100.0f / 50.0f);
+
+            // Calculer l'accélération angulaire pour la touche "Left"
+            if (keyboard.isKeyPressed(ezapp::Keyboard::Key::A))
+                mShip.setGMissileAngularAcc(-100.0f / 50.0f);
+
+            if (mShip.missileShot())
+                mCollision.collisionMissileWall(mShip);
         }
 
         // Retourner false si l'utilisateur a appuyé sur la touche ESC
@@ -268,12 +285,24 @@ void GameEngine::processDisplay(ezapp::Screen& screen)
         screen.clear();
 
 
-        Polygon message1;
-        std::string msg1 = "Menu du jeu!\n\n\nPresser P : Pour jouer cliquer\n\n"
-            "Presser M : Pour revenir au menu pendant le jeu.\n\n"
-            "Presser Esc : Pour quitter le jeu";
-        message1.setColors(Color(2.0f, 7.0f, 1.0f), Color(2.0f, 1.0f, 1.0f));
-        message1.drawText(screen, msg1, 450.0f, 255.0f, 0.0f, 0.7f);
+        Polygon message1, message2, message3;
+        std::string msg1 = "--------------------------\n|\tMenu du jeu!\t|\n--------------------------\n";
+        message1.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+        message1.drawText(screen, msg1, 450.0f, 200.0f, 0.0f, 0.7f);
+
+        std::string msg2 = "\nAppuyer P : Pour jouer \n"
+            "\nAppuyer M : Pour revenir au menu pendant le jeu.\n"
+            "\nAppuyer Esc : Pour quitter le jeu\n\n";
+        message2.setColors(Color(1.0f, 1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f));
+        message2.drawText(screen, msg2, 450.0f, 255.0f, 0.0f, 0.7f);
+
+
+        std::string msg3 = "\n----------------------------------------------------------------------------------------------------------\n"
+            "\tInstructions: si vous mourrez durant le jeu, pressez sur la barre d'espace!\n"
+            "\tPendant le jeu, si vous presser la barre d'espace vous lancez des missiles.\t\n"
+            "---------------------------------------------------------------------------------------------------------- \n";
+        message3.setColors(Color(5.4f, 2.0f, 2.0f), Color(2.5f, 2.0f, 2.0f));
+        message3.drawText(screen, msg3, 280.0f, 500.0f, 0.0f, 0.7f);
 
 
     }

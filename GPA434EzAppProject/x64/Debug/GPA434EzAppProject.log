@@ -1,5 +1,3 @@
-﻿  GameEngine.cpp
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\GameEngine.cpp(53,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\GameEngine.cpp(53,29): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\GameEngine.cpp(250): warning C4715: 'GameEngine::processEvents': not all control paths return a value
+﻿  Spaceship.cpp
+C:\Users\GrosM\source\repos\GPA434_Lab1\GPA434EzAppProject\Spaceship.cpp(230,43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
   GPA434EzAppProject.vcxproj -> C:\Users\GrosM\Source\Repos\GPA434_Lab1\x64\Debug\GPA434EzAppProject.exe

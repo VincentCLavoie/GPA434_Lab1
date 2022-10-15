@@ -34,6 +34,7 @@
 #include "Vect2d.h"
 #include "Polygon.h"
 #include "Missile.h"
+#include "MissileGuide.h"
 #include <EzApp>
 
 class Spaceship
@@ -103,6 +104,16 @@ public:
     void drawNbMissile(ezapp::Screen& screen) const;
     void collisionMissile();
 
+
+    // --------------------------------------------------------------------------
+    // Méthodes pour le missile guidé
+    // --------------------------------------------------------------------------
+    bool guidedMissileShot() const;
+    void manageGuidedMissile(bool const& gPressed, float const& elapsedTime);
+    void setGuidedMissileAcc(float guidedMissileAcc);
+    void setGMissileAngularAcc(float const& angularAcc);
+    float GMissileangularAcc() const;
+
 private:
 
     Vect2d mPosition;          // position linéaire
@@ -118,6 +129,8 @@ private:
     Missile mMissile;
     Vect2d vitesseMissile;     // Vitesse du missile
     int mNbMissiles;
+    MissileGuide mGuidedMissile;
+
 
 };
 #endif //SPACESHIP_H

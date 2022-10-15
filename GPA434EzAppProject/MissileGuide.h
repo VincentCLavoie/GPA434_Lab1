@@ -1,4 +1,4 @@
-/*  MissileGuidé.h
+/*  GuidedMissile.h
 *
  *  Cette classe gère un missile guidé qui est tiré par le vaisseau spatial. Voici les éléments
  *  gérés par elle:
@@ -37,12 +37,14 @@ public:
     Vect2d velocity() const;
     float angularPos() const;
     float angularVel() const;
-    bool missileShot() const;
+    float angularAcc() const;
+    bool guidedMissileShot() const;
 
     void setPosition(Vect2d const& position);
     void setVelocity(Vect2d const& velocity);
     void setAngularPos(float const& angularPos);
     void setAngularVel(float const& angularVel);
+    void setAngularAcc(float const& angularAcc);
     void setMissileShot(bool const& missileShot);
 
     // --------------------------------------------------------------------------
@@ -61,7 +63,8 @@ private:
     float mAngularPos;         // position angulaire
     float mAngularVel;         // vitesse angulaire
     Polygon mShape;            // forme polygonale du missile
-    bool mMissileShot;         // missile tiré ou non 
+    bool mGuidedMissileShot;         // missile tiré ou non
+    float mAngularAcc;
 
 };
 

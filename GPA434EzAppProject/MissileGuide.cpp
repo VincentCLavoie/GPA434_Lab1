@@ -1,4 +1,4 @@
-#include "MissileGuide.h"
+#include "missileGuide.h"
 
 
 // Constructeur avec paramètres
@@ -7,11 +7,11 @@ MissileGuide::MissileGuide(float origineX, float origineY)
 	mVelocity(),
 	mAngularPos{},
 	mAngularVel{},
-	mMissileShot{}
+	mAngularAcc{},
+	mGuidedMissileShot{}
 
 {
-	// Le vaisseau spatial aura la couleur noire, des traits blancs d'épaisseur de 1. Le point au centre
-	// du vaisseau est à (0, 0).
+	// Le point au centre du vaisseau est à (0, 0).
 	mShape.buildMissile(Color(2.0f, 7.0f, 4.0f, 8.0f), Color(0.0f, 0.0f, 0.0f, 1.0f), 0.0f, 0.0f);
 }
 
@@ -43,9 +43,14 @@ float MissileGuide::angularVel() const
 	return mAngularVel;
 }
 
-bool MissileGuide::missileShot() const
+float MissileGuide::angularAcc() const
 {
-	return mMissileShot;
+	return mAngularAcc;
+}
+
+bool MissileGuide::guidedMissileShot() const
+{
+	return mGuidedMissileShot;
 }
 
 void MissileGuide::setPosition(Vect2d const& position)
@@ -68,9 +73,14 @@ void MissileGuide::setAngularVel(float const& angularVel)
 	mAngularVel = angularVel;
 }
 
+void MissileGuide::setAngularAcc(float const& angularAcc)
+{
+	mAngularAcc = angularAcc;
+}
+
 void MissileGuide::setMissileShot(bool const& missileShot)
 {
-	mMissileShot = missileShot;
+	mGuidedMissileShot = missileShot;
 }
 
 // --------------------------------------------------------------------------------------
@@ -80,8 +90,17 @@ void MissileGuide::setMissileShot(bool const& missileShot)
 
 void MissileGuide::processTime(float const& elapsedTime)
 {
+	mAngularPos += mAngularVel * elapsedTime + 0.5 * mAngularVel * (elapsedTime * elapsedTime);
+
+	// 2) Calculer la nouvelle vitesse angulaire
+	mAngularVel += mAngularAcc * elapsedTime;
+
+	// 3) RAZ l'accélération linéaire car l’accélération
+	//    est recalculée à chaque pas de temps par GameEngine
+	mAngularAcc = 0;
+
 	mPosition += mVelocity * elapsedTime;
-	mAngularPos += mAngularVel * elapsedTime;
+	//mAngularPos += mAngularVel * elapsedTime;
 }
 
 void MissileGuide::draw(ezapp::Screen& screen) const
@@ -91,6 +110,6 @@ void MissileGuide::draw(ezapp::Screen& screen) const
 
 void MissileGuide::collison()
 {
-	mMissileShot = false;
+	mGuidedMissileShot = false;
 	setPosition(Vect2d(-10.0f, -10.0f));
 }
